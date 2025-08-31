@@ -52,9 +52,13 @@ opencv-python==4.8.1.78
 moviepy==1.0.3
 pillow==10.1.0
 pillow-heif==0.13.0
+ultralytics>=8.0.0
 
 # Image Processing
 imagehash==4.3.1
+
+# Web Scraping
+beautifulsoup4==4.12.2
 
 # Text Processing
 textstat==0.7.3
