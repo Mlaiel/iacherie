@@ -90,6 +90,9 @@ class AWSConfig:
             "CostCenter": "IA-Platform",
             "Compliance": "GDPR-CCPA"
         }
+        
+        # Multi-region deployment configuration
+        self.multi_region_config = self._get_multi_region_config()
     
     def _get_account_id(self) -> str:
         """Get AWS account ID"""
@@ -107,6 +110,88 @@ class AWSConfig:
             return [az['ZoneName'] for az in azs['AvailabilityZones'][:3]]
         except Exception:
             return [f"{self.region}a", f"{self.region}b", f"{self.region}c"]
+    
+    def _get_multi_region_config(self) -> Dict[str, Any]:
+        """Get multi-region deployment configuration for global infrastructure"""
+        return {
+            "primary_regions": {
+                "us-east-1": {
+                    "name": "US East (N. Virginia)",
+                    "priority": "primary",
+                    "description": "Primary region for global deployment",
+                    "compliance": ["SOC2", "HIPAA", "PCI_DSS"],
+                    "availability_zones": ["us-east-1a", "us-east-1b", "us-east-1c"],
+                    "services": ["ec2", "rds", "s3", "cloudfront", "lambda", "ecs"]
+                },
+                "us-west-2": {
+                    "name": "US West (Oregon)", 
+                    "priority": "backup",
+                    "description": "Backup region and West Coast users",
+                    "compliance": ["SOC2", "PCI_DSS"],
+                    "availability_zones": ["us-west-2a", "us-west-2b", "us-west-2c"],
+                    "services": ["ec2", "rds", "s3", "lambda", "ecs"]
+                },
+                "eu-west-1": {
+                    "name": "EU West (Ireland)",
+                    "priority": "high",
+                    "description": "GDPR compliance for European users",
+                    "compliance": ["GDPR", "ISO27001", "SOC2"],
+                    "availability_zones": ["eu-west-1a", "eu-west-1b", "eu-west-1c"],
+                    "services": ["ec2", "rds", "s3", "lambda", "ecs"]
+                },
+                "ap-southeast-1": {
+                    "name": "Asia Pacific (Singapore)",
+                    "priority": "high", 
+                    "description": "Asia-Pacific regional coverage",
+                    "compliance": ["SOC2", "ISO27001"],
+                    "availability_zones": ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"],
+                    "services": ["ec2", "rds", "s3", "lambda", "ecs"]
+                },
+                "ap-northeast-1": {
+                    "name": "Asia Pacific Northeast (Tokyo)",
+                    "priority": "high",
+                    "description": "Japan and Korea regional coverage", 
+                    "compliance": ["SOC2", "ISO27001"],
+                    "availability_zones": ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"],
+                    "services": ["ec2", "rds", "s3", "lambda", "ecs"]
+                },
+                "sa-east-1": {
+                    "name": "South America East (São Paulo)",
+                    "priority": "medium",
+                    "description": "South America regional coverage",
+                    "compliance": ["SOC2"],
+                    "availability_zones": ["sa-east-1a", "sa-east-1b", "sa-east-1c"],
+                    "services": ["ec2", "rds", "s3", "lambda", "ecs"]
+                }
+            },
+            "global_services": {
+                "cloudfront": {
+                    "description": "Global CDN for content delivery",
+                    "price_class": "PriceClass_All",
+                    "regions": "all"
+                },
+                "route53": {
+                    "description": "Global DNS and health checks",
+                    "regions": "global"
+                },
+                "iam": {
+                    "description": "Global identity and access management",
+                    "regions": "global"
+                }
+            },
+            "replication_strategy": {
+                "database": {
+                    "primary_region": "us-east-1",
+                    "read_replicas": ["us-west-2", "eu-west-1", "ap-southeast-1"],
+                    "backup_regions": ["us-west-2", "eu-west-1"]
+                },
+                "storage": {
+                    "primary_region": "us-east-1",
+                    "replication_regions": ["us-west-2", "eu-west-1", "ap-southeast-1", "ap-northeast-1", "sa-east-1"],
+                    "cross_region_replication": True
+                }
+            }
+        }
     
     def get_vpc_configuration(self) -> Dict[str, Any]:
         """Generate VPC configuration"""
@@ -1014,3 +1099,25 @@ echo "2. Configure DNS: Update Route53 records"
 echo "3. Setup monitoring: Deploy Prometheus/Grafana"
 echo "4. Configure CI/CD: Setup GitHub Actions with AWS"
 '''
+    
+    def get_region_config(self, region: str) -> Dict[str, Any]:
+        """Get configuration for a specific region"""
+        return self.multi_region_config["primary_regions"].get(region, {})
+    
+    def get_primary_regions(self) -> List[str]:
+        """Get list of primary deployment regions"""
+        return list(self.multi_region_config["primary_regions"].keys())
+    
+    def get_compliance_requirements(self, region: str) -> List[str]:
+        """Get compliance requirements for a specific region"""
+        region_config = self.get_region_config(region)
+        return region_config.get("compliance", [])
+    
+    def is_primary_region(self, region: str) -> bool:
+        """Check if region is a primary deployment region"""
+        return region in self.get_primary_regions()
+    
+    def get_region_priority(self, region: str) -> str:
+        """Get priority level for a specific region"""
+        region_config = self.get_region_config(region)
+        return region_config.get("priority", "unknown")
