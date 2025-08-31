@@ -111,6 +111,23 @@ class KeywordResearch:
     opportunity_score: float
     market_insights: Dict[str, Any]
 
+@dataclass
+class SeoJob:
+    """Job configuration for SEO operations"""
+    job_id: str
+    data: Dict[str, Any]
+    priority: int = 5
+    created_at: datetime = field(default_factory=datetime.now)
+
+@dataclass 
+class SeoResult:
+    """Result of SEO operations"""
+    job_id: str
+    success: bool
+    data: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
+    completed_at: datetime = field(default_factory=datetime.now)
+
 class SeoEngine:
     """
     Ultra-Advanced SEO Processing Engine

@@ -39,6 +39,19 @@ from .monetization_agent import MonetizationAgent
 from .seo_agent import SEOAgent
 from .distribution_agent import DistributionAgent
 
+# Import all collaboration agents (12 total)
+from .marketplace_agent import MarketplaceAgent
+from .project_management_agent import ProjectManagementAgent
+from .communication_agent import CommunicationAgent
+from .file_sharing_agent import FileSharingAgent
+from .version_control_agent import VersionControlAgent
+from .quality_assurance_agent import QualityAssuranceAgent
+from .contract_generation_agent import ContractGenerationAgent
+from .dispute_resolution_agent import DisputeResolutionAgent
+from .skill_matching_agent import SkillMatchingAgent
+from .timeline_management_agent import TimelineManagementAgent
+from .revenue_sharing_agent import RevenueSharingAgent
+
 # Import processing and AI agents
 from .audio_agent import AudioAgent
 from .video_agent import VideoAgent
@@ -56,7 +69,6 @@ from .spotify_agent import SpotifyAgent
 from .social_media_agent import SocialMediaAgent
 from .revenue_agent import RevenueAgent
 from .brand_agent import BrandAgent
-from .marketplace_agent import MarketplaceAgent
 
 # Import monitoring and analytics agents
 from .analytics_agent import AnalyticsAgent
@@ -118,6 +130,19 @@ AGENT_REGISTRY = {
     'seo_agent': SEOAgent,
     'distribution_agent': DistributionAgent,
     
+    # All 12 Collaboration Agents
+    'marketplace_agent': MarketplaceAgent,
+    'project_management_agent': ProjectManagementAgent,
+    'communication_agent': CommunicationAgent,
+    'file_sharing_agent': FileSharingAgent,
+    'version_control_agent': VersionControlAgent,
+    'quality_assurance_agent': QualityAssuranceAgent,
+    'contract_generation_agent': ContractGenerationAgent,
+    'dispute_resolution_agent': DisputeResolutionAgent,
+    'skill_matching_agent': SkillMatchingAgent,
+    'timeline_management_agent': TimelineManagementAgent,
+    'revenue_sharing_agent': RevenueSharingAgent,
+    
     # Processing and AI agents
     'audio_agent': AudioAgent,
     'video_agent': VideoAgent,
@@ -135,7 +160,6 @@ AGENT_REGISTRY = {
     'social_media_agent': SocialMediaAgent,
     'revenue_agent': RevenueAgent,
     'brand_agent': BrandAgent,
-    'marketplace_agent': MarketplaceAgent,
     
     # Monitoring and analytics agents
     'analytics_agent': AnalyticsAgent,
@@ -312,6 +336,19 @@ __all__ = [
     'SEOAgent',
     'DistributionAgent',
     
+    # All 12 Collaboration Agents
+    'MarketplaceAgent',
+    'ProjectManagementAgent',
+    'CommunicationAgent',
+    'FileSharingAgent',
+    'VersionControlAgent',
+    'QualityAssuranceAgent',
+    'ContractGenerationAgent',
+    'DisputeResolutionAgent',
+    'SkillMatchingAgent',
+    'TimelineManagementAgent',
+    'RevenueSharingAgent',
+    
     # Processing and AI agents
     'AudioAgent',
     'VideoAgent',
@@ -329,7 +366,6 @@ __all__ = [
     'SocialMediaAgent',
     'RevenueAgent',
     'BrandAgent',
-    'MarketplaceAgent',
     
     # Monitoring and analytics agents
     'AnalyticsAgent',
