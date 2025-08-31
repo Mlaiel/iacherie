@@ -528,6 +528,8 @@ def get_version_info() -> dict:
             "Security & compliance"
         ]
     }
+
+from .core.distribution_engine import (
     PlatformType,
     PlatformAdapterBase,
     ContentScheduler,

@@ -25,6 +25,7 @@ from .core.seo_engine import (
 
 # Legacy compatibility (for smooth migration)
 from .manager import SeoManager as SeoAgent
+from .manager import SeoManager as SEOAgent  # For compatibility
 
 __all__ = [
     # Master Manager
@@ -37,5 +38,6 @@ __all__ = [
     'SeoResult',
     
     # Legacy compatibility
-    'SeoAgent'
+    'SeoAgent',
+    'SEOAgent'
 ]
