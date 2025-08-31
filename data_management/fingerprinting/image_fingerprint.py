@@ -306,17 +306,77 @@ class CLIPProcessor(ImageProcessor):
             return {}
 
 class ImageHashProcessor(ImageProcessor):
-    """Processeur pour les hash perceptuels d'images"""
+    """Processeur pour les hash perceptuels d'images - Enhanced with industrial algorithms"""
     
     def __init__(self):
         if not PIL_AVAILABLE:
             raise ImportError("PIL library not available")
+        
+        # Import industrial processor for enhanced capabilities
+        try:
+            from .industrial_image_processor import create_industrial_processor
+            self.industrial_processor = create_industrial_processor(
+                enable_all_hashes=True,
+                enable_clip=True, 
+                enable_traditional_cv=True,
+                enable_geometric_resistance=True,
+                use_gpu=False
+            )
+            self.use_industrial = True
+            logger.info("Enhanced with industrial multi-algorithm processor")
+        except Exception as e:
+            logger.warning(f"Industrial processor not available, using basic implementation: {e}")
+            self.industrial_processor = None
+            self.use_industrial = False
     
     async def process(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
-        """Génère des hash perceptuels pour l'image"""
+        """Génère des hash perceptuels pour l'image avec support industriel"""
         try:
             start_time = time.time()
             
+            # Try industrial processor first for comprehensive analysis
+            if self.use_industrial and self.industrial_processor:
+                try:
+                    industrial_result = await self.industrial_processor.process_image(image_path)
+                    
+                    # Convert industrial result to expected format
+                    return {
+                        "processor": "enhanced_image_hash",
+                        "fingerprint_id": industrial_result.fingerprint_id,
+                        "hashes": {
+                            "phash": industrial_result.phash,
+                            "dhash": industrial_result.dhash, 
+                            "ahash": industrial_result.ahash,
+                            "whash": industrial_result.whash
+                        },
+                        "combined_hash": industrial_result.combined_hash,
+                        "clip_features": {
+                            "embedding": industrial_result.clip_embedding,
+                            "embedding_hash": industrial_result.clip_embedding_hash
+                        },
+                        "traditional_features": {
+                            "sift": industrial_result.sift_features,
+                            "surf": industrial_result.surf_features,
+                            "orb": industrial_result.orb_features
+                        },
+                        "geometric_features": {
+                            "multi_scale": industrial_result.multi_scale_features,
+                            "rotation_invariant": industrial_result.rotation_invariant_features
+                        },
+                        "quality_metrics": {
+                            "quality_score": industrial_result.image_quality_score,
+                            "feature_density": industrial_result.feature_density,
+                            "geometric_stability": industrial_result.geometric_stability
+                        },
+                        "image_properties": industrial_result.image_properties,
+                        "hash_size": config.hash_size,
+                        "processing_time": industrial_result.processing_time,
+                        "industrial_grade": True
+                    }
+                except Exception as e:
+                    logger.warning(f"Industrial processing failed, falling back to basic: {e}")
+            
+            # Fallback to basic implementation
             # Chargement de l'image
             image = Image.open(image_path).convert("RGB")
             
@@ -344,12 +404,13 @@ class ImageHashProcessor(ImageProcessor):
             processing_time = time.time() - start_time
             
             return {
-                "processor": "image_hash",
+                "processor": "basic_image_hash",
                 "hashes": hashes,
                 "combined_hash": combined_hash,
                 "image_properties": image_analysis,
                 "hash_size": config.hash_size,
-                "processing_time": processing_time
+                "processing_time": processing_time,
+                "industrial_grade": False
             }
             
         except Exception as e:

@@ -26,7 +26,9 @@ FINGERPRINTING ARCHITECTURE:
 ├── 🚨 Real-time Detection (Web Crawlers + APIs)
 ├── 📊 Analytics Dashboard (Performance + Alerts)
 └── 🛡️ Protection Management (Takedown + Recovery)
-"""__version__ = "1.0.0"
+"""
+
+__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 from typing import Dict, List, Any, Optional, Union, Tuple
