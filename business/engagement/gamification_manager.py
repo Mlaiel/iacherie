@@ -64,6 +64,15 @@ class GamificationEventType(str, Enum):
     INNOVATION_USAGE = "innovation_usage"
     SEO_OPTIMIZATION = "seo_optimization"
     ENGAGEMENT_MILESTONE = "engagement_milestone"
+    # Protection & Security Events
+    CONTENT_PROTECTION = "content_protection"
+    FIRST_PROTECTION = "first_protection"
+    COPYRIGHT_DEFENSE = "copyright_defense"
+    SECURITY_FEATURE_ENABLED = "security_feature_enabled"
+    WATERMARK_APPLIED = "watermark_applied"
+    BLOCKCHAIN_PROTECTION = "blockchain_protection"
+    RIGHTS_LICENSING = "rights_licensing"
+    DISPUTE_RESOLUTION = "dispute_resolution"
 
 
 class GamificationMetricType(str, Enum):
@@ -78,6 +87,15 @@ class GamificationMetricType(str, Enum):
     PLATFORM_COUNT = "platform_count"
     GLOBAL_REACH_COUNTRIES = "global_reach_countries"
     COMMUNITY_IMPACT = "community_impact"
+    # Protection & Security Metrics
+    PROTECTED_CONTENT_COUNT = "protected_content_count"
+    COPYRIGHT_DEFENSES = "copyright_defenses"
+    SECURITY_FEATURES_ENABLED = "security_features_enabled"
+    WATERMARKED_CONTENT = "watermarked_content"
+    BLOCKCHAIN_PROTECTED_CONTENT = "blockchain_protected_content"
+    LICENSED_CONTENT = "licensed_content"
+    DISPUTES_RESOLVED = "disputes_resolved"
+    PLATFORMS_PROTECTED = "platforms_protected"
     INNOVATION_ADOPTION = "innovation_adoption"
 
 
