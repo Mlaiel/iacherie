@@ -26,12 +26,439 @@ from typing import Dict, List, Any, Optional, Union, Set, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
-import websockets
-import redis
+try:
+    import websockets
+    WEBSOCKETS_AVAILABLE = True
+except ImportError:
+    websockets = None
+    WEBSOCKETS_AVAILABLE = False
+
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    redis = None
+    REDIS_AVAILABLE = False
 from concurrent.futures import ThreadPoolExecutor
+import threading
+from collections import defaultdict
 
 # Configure logging
 logger = logging.getLogger(__name__)
+
+
+class WebSocketCollaborationServer:
+    """Real-time WebSocket server for collaborative remix editing"""
+    
+    def __init__(self, host: str = "localhost", port: int = 8765, 
+                 redis_url: str = "redis://localhost:6379"):
+        self.host = host
+        self.port = port
+        self.redis_url = redis_url
+        
+        # Connection management
+        self.active_connections: Dict[str, Any] = {}  # Changed type to Any for compatibility
+        self.session_connections: Dict[str, Set[str]] = defaultdict(set)
+        self.user_sessions: Dict[str, str] = {}
+        
+        # Message queues for real-time updates
+        self.message_queues: Dict[str, asyncio.Queue] = defaultdict(asyncio.Queue)
+        
+        # Session locks for thread safety
+        self.session_locks: Dict[str, asyncio.Lock] = defaultdict(asyncio.Lock)
+        
+        # Server state
+        self.is_running = False
+        self.server_instance = None
+        
+        # Redis connection for persistence
+        self.redis_client = None
+        
+        if not WEBSOCKETS_AVAILABLE:
+            logger.warning("WebSockets not available - server will run in mock mode")
+        if not REDIS_AVAILABLE:
+            logger.warning("Redis not available - using in-memory storage only")
+        
+        logger.info(f"🌐 WebSocket collaboration server initialized on {host}:{port}")
+    
+    async def start_server(self) -> bool:
+        """Start the WebSocket collaboration server"""
+        try:
+            if not WEBSOCKETS_AVAILABLE:
+                logger.warning("WebSockets not available - starting mock server")
+                self.is_running = True
+                return True
+                
+            # Connect to Redis
+            if REDIS_AVAILABLE:
+                self.redis_client = redis.Redis.from_url(self.redis_url, decode_responses=True)
+                await self._test_redis_connection()
+            
+            # Start WebSocket server
+            self.server_instance = await websockets.serve(
+                self._handle_client_connection,
+                self.host,
+                self.port,
+                max_size=1024*1024,  # 1MB max message size
+                max_queue=50,        # Max queued messages per connection
+                compression=None,    # Disable compression for lower latency
+                ping_interval=20,    # Ping every 20 seconds
+                ping_timeout=10      # Timeout after 10 seconds
+            )
+            
+            self.is_running = True
+            logger.info(f"🚀 WebSocket collaboration server started on ws://{self.host}:{self.port}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to start WebSocket server: {e}")
+            return False
+    
+    async def stop_server(self):
+        """Stop the WebSocket collaboration server"""
+        try:
+            self.is_running = False
+            
+            # Close all active connections
+            if self.active_connections:
+                await asyncio.gather(
+                    *[conn.close() for conn in self.active_connections.values()],
+                    return_exceptions=True
+                )
+            
+            # Stop the server
+            if self.server_instance:
+                self.server_instance.close()
+                await self.server_instance.wait_closed()
+            
+            # Close Redis connection
+            if self.redis_client:
+                await self.redis_client.close()
+            
+            logger.info("⏹️ WebSocket collaboration server stopped")
+            
+        except Exception as e:
+            logger.error(f"Error stopping server: {e}")
+    
+    async def _handle_client_connection(self, websocket: websockets.WebSocketServerProtocol, path: str):
+        """Handle incoming WebSocket client connections"""
+        client_id = str(uuid.uuid4())
+        client_ip = websocket.remote_address[0] if websocket.remote_address else "unknown"
+        
+        logger.info(f"👋 New client connected: {client_id} from {client_ip}")
+        
+        try:
+            # Register connection
+            self.active_connections[client_id] = websocket
+            
+            # Send welcome message
+            await self._send_message(websocket, {
+                "type": "connection_established",
+                "client_id": client_id,
+                "server_time": datetime.utcnow().isoformat(),
+                "max_message_size": 1024*1024
+            })
+            
+            # Handle messages
+            async for message in websocket:
+                await self._process_client_message(client_id, websocket, message)
+                
+        except websockets.exceptions.ConnectionClosed:
+            logger.info(f"👋 Client disconnected: {client_id}")
+        except Exception as e:
+            logger.error(f"❌ Error handling client {client_id}: {e}")
+        finally:
+            await self._cleanup_client_connection(client_id)
+    
+    async def _process_client_message(self, client_id: str, websocket: websockets.WebSocketServerProtocol, message: str):
+        """Process incoming message from client"""
+        try:
+            # Parse JSON message
+            data = json.loads(message)
+            message_type = data.get("type")
+            
+            logger.debug(f"📨 Received {message_type} from {client_id}")
+            
+            # Route message based on type
+            if message_type == "join_session":
+                await self._handle_join_session(client_id, websocket, data)
+            elif message_type == "leave_session":
+                await self._handle_leave_session(client_id, data)
+            elif message_type == "collaboration_edit":
+                await self._handle_collaboration_edit(client_id, data)
+            elif message_type == "realtime_audio_update":
+                await self._handle_realtime_audio_update(client_id, data)
+            elif message_type == "ping":
+                await self._handle_ping(client_id, websocket, data)
+            else:
+                await self._send_error(websocket, f"Unknown message type: {message_type}")
+                
+        except json.JSONDecodeError:
+            await self._send_error(websocket, "Invalid JSON message")
+        except Exception as e:
+            logger.error(f"Error processing message from {client_id}: {e}")
+            await self._send_error(websocket, "Internal server error")
+    
+    async def _handle_join_session(self, client_id: str, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
+        """Handle client joining a collaboration session"""
+        try:
+            session_id = data.get("session_id")
+            user_info = data.get("user_info", {})
+            
+            if not session_id:
+                await self._send_error(websocket, "session_id required")
+                return
+            
+            async with self.session_locks[session_id]:
+                # Check session capacity (max 10 users)
+                if len(self.session_connections[session_id]) >= 10:
+                    await self._send_error(websocket, "Session at maximum capacity")
+                    return
+                
+                # Add client to session
+                self.session_connections[session_id].add(client_id)
+                self.user_sessions[client_id] = session_id
+                
+                # Store user info in Redis
+                await self._store_session_data(session_id, client_id, user_info)
+                
+                # Notify other users in session
+                await self._broadcast_to_session(session_id, {
+                    "type": "user_joined",
+                    "user_id": client_id,
+                    "user_info": user_info,
+                    "session_user_count": len(self.session_connections[session_id]),
+                    "timestamp": datetime.utcnow().isoformat()
+                }, exclude_client=client_id)
+                
+                # Send session state to new user
+                session_state = await self._get_session_state(session_id)
+                await self._send_message(websocket, {
+                    "type": "session_joined",
+                    "session_id": session_id,
+                    "session_state": session_state,
+                    "user_count": len(self.session_connections[session_id])
+                })
+                
+                logger.info(f"✅ Client {client_id} joined session {session_id}")
+                
+        except Exception as e:
+            logger.error(f"Error handling join session: {e}")
+            await self._send_error(websocket, "Failed to join session")
+    
+    async def _handle_collaboration_edit(self, client_id: str, data: Dict[str, Any]):
+        """Handle collaborative editing actions"""
+        try:
+            session_id = self.user_sessions.get(client_id)
+            if not session_id:
+                return
+            
+            edit_data = data.get("edit_data", {})
+            edit_type = edit_data.get("type")
+            timestamp = datetime.utcnow().isoformat()
+            
+            # Add metadata
+            edit_data.update({
+                "user_id": client_id,
+                "session_id": session_id,
+                "timestamp": timestamp,
+                "edit_id": str(uuid.uuid4())
+            })
+            
+            # Store edit in Redis for conflict resolution
+            await self._store_edit_action(session_id, edit_data)
+            
+            # Broadcast to all users in session
+            await self._broadcast_to_session(session_id, {
+                "type": "collaboration_edit",
+                "edit_data": edit_data
+            })
+            
+            logger.debug(f"📝 Processed {edit_type} edit from {client_id} in session {session_id}")
+            
+        except Exception as e:
+            logger.error(f"Error handling collaboration edit: {e}")
+    
+    async def _handle_realtime_audio_update(self, client_id: str, data: Dict[str, Any]):
+        """Handle real-time audio updates (high frequency)"""
+        try:
+            session_id = self.user_sessions.get(client_id)
+            if not session_id:
+                return
+            
+            # For audio updates, we prioritize speed over persistence
+            audio_data = data.get("audio_data", {})
+            
+            # Broadcast immediately without storing (too high frequency)
+            await self._broadcast_to_session(session_id, {
+                "type": "realtime_audio_update",
+                "user_id": client_id,
+                "audio_data": audio_data,
+                "timestamp": datetime.utcnow().isoformat()
+            }, exclude_client=client_id)
+            
+        except Exception as e:
+            logger.error(f"Error handling audio update: {e}")
+    
+    async def _broadcast_to_session(self, session_id: str, message: Dict[str, Any], exclude_client: Optional[str] = None):
+        """Broadcast message to all clients in a session"""
+        if session_id not in self.session_connections:
+            return
+        
+        # Prepare message
+        message_str = json.dumps(message)
+        
+        # Send to all clients in session
+        disconnected_clients = []
+        for client_id in self.session_connections[session_id]:
+            if exclude_client and client_id == exclude_client:
+                continue
+                
+            websocket = self.active_connections.get(client_id)
+            if websocket:
+                try:
+                    await websocket.send(message_str)
+                except (websockets.exceptions.ConnectionClosed, ConnectionResetError):
+                    disconnected_clients.append(client_id)
+        
+        # Clean up disconnected clients
+        for client_id in disconnected_clients:
+            await self._cleanup_client_connection(client_id)
+    
+    async def _send_message(self, websocket: websockets.WebSocketServerProtocol, message: Dict[str, Any]):
+        """Send message to a specific WebSocket connection"""
+        try:
+            await websocket.send(json.dumps(message))
+        except (websockets.exceptions.ConnectionClosed, ConnectionResetError):
+            logger.debug("Connection closed while sending message")
+    
+    async def _send_error(self, websocket: websockets.WebSocketServerProtocol, error_message: str):
+        """Send error message to client"""
+        await self._send_message(websocket, {
+            "type": "error",
+            "error": error_message,
+            "timestamp": datetime.utcnow().isoformat()
+        })
+    
+    async def _cleanup_client_connection(self, client_id: str):
+        """Clean up client connection and session data"""
+        try:
+            # Remove from active connections
+            if client_id in self.active_connections:
+                del self.active_connections[client_id]
+            
+            # Remove from session
+            session_id = self.user_sessions.get(client_id)
+            if session_id:
+                self.session_connections[session_id].discard(client_id)
+                del self.user_sessions[client_id]
+                
+                # Notify other users
+                await self._broadcast_to_session(session_id, {
+                    "type": "user_left",
+                    "user_id": client_id,
+                    "session_user_count": len(self.session_connections[session_id]),
+                    "timestamp": datetime.utcnow().isoformat()
+                })
+                
+                # Clean up empty sessions
+                if not self.session_connections[session_id]:
+                    del self.session_connections[session_id]
+                    if session_id in self.session_locks:
+                        del self.session_locks[session_id]
+            
+            logger.debug(f"🧹 Cleaned up client {client_id}")
+            
+        except Exception as e:
+            logger.error(f"Error cleaning up client {client_id}: {e}")
+    
+    async def _test_redis_connection(self):
+        """Test Redis connection"""
+        try:
+            await self.redis_client.ping()
+            logger.info("✅ Redis connection established")
+        except Exception as e:
+            logger.warning(f"⚠️ Redis connection failed: {e}")
+            # Continue without Redis (in-memory only)
+    
+    async def _store_session_data(self, session_id: str, client_id: str, user_info: Dict[str, Any]):
+        """Store session data in Redis"""
+        if self.redis_client:
+            try:
+                key = f"session:{session_id}:user:{client_id}"
+                await self.redis_client.hset(key, mapping={
+                    "user_info": json.dumps(user_info),
+                    "joined_at": datetime.utcnow().isoformat()
+                })
+                await self.redis_client.expire(key, 86400)  # 24 hour expiry
+            except Exception as e:
+                logger.error(f"Error storing session data: {e}")
+    
+    async def _store_edit_action(self, session_id: str, edit_data: Dict[str, Any]):
+        """Store edit action for conflict resolution"""
+        if self.redis_client:
+            try:
+                key = f"session:{session_id}:edits"
+                await self.redis_client.lpush(key, json.dumps(edit_data))
+                await self.redis_client.ltrim(key, 0, 999)  # Keep last 1000 edits
+                await self.redis_client.expire(key, 86400)  # 24 hour expiry
+            except Exception as e:
+                logger.error(f"Error storing edit action: {e}")
+    
+    async def _get_session_state(self, session_id: str) -> Dict[str, Any]:
+        """Get current session state"""
+        try:
+            # Get users in session
+            users = []
+            for client_id in self.session_connections[session_id]:
+                if self.redis_client:
+                    try:
+                        user_key = f"session:{session_id}:user:{client_id}"
+                        user_data = await self.redis_client.hgetall(user_key)
+                        if user_data:
+                            users.append({
+                                "client_id": client_id,
+                                "user_info": json.loads(user_data.get("user_info", "{}")),
+                                "joined_at": user_data.get("joined_at")
+                            })
+                    except Exception as e:
+                        logger.error(f"Error getting user data: {e}")
+                
+                # Fallback: minimal user info
+                if not users or not any(u["client_id"] == client_id for u in users):
+                    users.append({
+                        "client_id": client_id,
+                        "user_info": {"status": "active"},
+                        "joined_at": datetime.utcnow().isoformat()
+                    })
+            
+            # Get recent edits
+            recent_edits = []
+            if self.redis_client:
+                try:
+                    edits_key = f"session:{session_id}:edits"
+                    edit_data = await self.redis_client.lrange(edits_key, 0, 49)  # Last 50 edits
+                    recent_edits = [json.loads(edit) for edit in edit_data]
+                except Exception as e:
+                    logger.error(f"Error getting recent edits: {e}")
+            
+            return {
+                "session_id": session_id,
+                "users": users,
+                "user_count": len(users),
+                "recent_edits": recent_edits,
+                "last_updated": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Error getting session state: {e}")
+            return {
+                "session_id": session_id,
+                "users": [],
+                "user_count": 0,
+                "recent_edits": [],
+                "last_updated": datetime.utcnow().isoformat()
+            }
 
 class CollaborationAction(Enum):
     """Types of collaboration actions"""

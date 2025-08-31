@@ -21,18 +21,35 @@ LOGIQUE MÉTIER: Audio input → Analysis → AI Processing → Professional Mas
 import asyncio
 import logging
 import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+try:
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    TORCH_AVAILABLE = True
+except ImportError:
+    torch = None
+    nn = None
+    F = None
+    TORCH_AVAILABLE = False
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
 from datetime import datetime
 import json
-import librosa
+try:
+    import librosa
+    LIBROSA_AVAILABLE = True
+except ImportError:
+    librosa = None
+    LIBROSA_AVAILABLE = False
 import scipy.signal as signal
 from scipy.optimize import minimize
-import pyloudnorm as pyln
+try:
+    import pyloudnorm as pyln
+    PYLOUDNORM_AVAILABLE = True
+except ImportError:
+    pyln = None
+    PYLOUDNORM_AVAILABLE = False
 
 # Configure logging
 logger = logging.getLogger(__name__)

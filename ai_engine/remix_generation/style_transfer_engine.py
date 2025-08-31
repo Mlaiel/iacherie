@@ -21,15 +21,27 @@ LOGIQUE MÉTIER: Source audio → Style analysis → Neural transfer → Quality
 import asyncio
 import logging
 import numpy as np
-import torch
-import torch.nn as torch_nn
-import torch.nn.functional as F
+try:
+    import torch
+    import torch.nn as torch_nn
+    import torch.nn.functional as F
+    TORCH_AVAILABLE = True
+except ImportError:
+    torch = None
+    torch_nn = None
+    F = None
+    TORCH_AVAILABLE = False
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
 from datetime import datetime
 import json
-import librosa
+try:
+    import librosa
+    LIBROSA_AVAILABLE = True
+except ImportError:
+    librosa = None
+    LIBROSA_AVAILABLE = False
 from pathlib import Path
 
 # Configure logging

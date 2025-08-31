@@ -21,18 +21,33 @@ LOGIQUE MÉTIER: Mixed audio → Source analysis → Neural separation → Quali
 import asyncio
 import logging
 import numpy as np
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
+try:
+    import torch
+    import torch.nn as nn
+    import torch.nn.functional as F
+    TORCH_AVAILABLE = True
+except ImportError:
+    torch = None
+    nn = None
+    F = None
+    TORCH_AVAILABLE = False
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime
 import json
-import librosa
+try:
+    import librosa
+    LIBROSA_AVAILABLE = True
+except ImportError:
+    librosa = None
+    LIBROSA_AVAILABLE = False
 import scipy.signal as signal
 from scipy.sparse import diags
 import sklearn.decomposition
+import queue
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -86,6 +101,257 @@ class SeparationParameters:
     noise_suppression: bool = True
     harmonic_emphasis: float = 1.0
     percussive_emphasis: float = 1.0
+
+
+class RealTimeStreamingSeparator:
+    """Real-time streaming source separation for live audio processing"""
+    
+    def __init__(self, chunk_size: int = 4096, sample_rate: int = 44100,
+                 overlap_ratio: float = 0.5, max_latency_ms: float = 50.0):
+        self.chunk_size = chunk_size
+        self.sample_rate = sample_rate
+        self.overlap_ratio = overlap_ratio
+        self.overlap_size = int(chunk_size * overlap_ratio)
+        self.max_latency_ms = max_latency_ms
+        
+        # Circular buffers for overlap-add processing
+        self.input_buffer = np.zeros(chunk_size + self.overlap_size)
+        self.output_buffers = {}
+        
+        # Processing queue for threading
+        self.processing_queue = queue.Queue(maxsize=10)
+        self.result_queue = queue.Queue(maxsize=10)
+        self.is_processing = False
+        
+        # Load separation model
+        self.separation_model = None
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        
+        # Thread pool for concurrent processing
+        self.executor = ThreadPoolExecutor(max_workers=2)
+        
+        logger.info(f"🎵 Real-time separator initialized: {chunk_size} samples, {max_latency_ms}ms max latency")
+    
+    async def start_streaming(self) -> bool:
+        """Start real-time streaming processing"""
+        try:
+            # Load separation model
+            if self.separation_model is None:
+                await self._load_separation_model()
+            
+            self.is_processing = True
+            
+            # Start processing thread
+            self.processing_thread = threading.Thread(target=self._processing_loop)
+            self.processing_thread.daemon = True
+            self.processing_thread.start()
+            
+            logger.info("🚀 Real-time streaming separator started")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to start streaming separator: {e}")
+            return False
+    
+    async def stop_streaming(self):
+        """Stop real-time streaming processing"""
+        self.is_processing = False
+        if hasattr(self, 'processing_thread'):
+            self.processing_thread.join(timeout=1.0)
+        self.executor.shutdown(wait=True)
+        logger.info("⏹️ Real-time streaming separator stopped")
+    
+    async def process_audio_chunk(self, audio_chunk: np.ndarray) -> Dict[InstrumentType, np.ndarray]:
+        """Process a single audio chunk and return separated sources"""
+        try:
+            # Add to processing queue (non-blocking)
+            try:
+                self.processing_queue.put_nowait(audio_chunk)
+            except queue.Full:
+                # Drop oldest chunk if queue is full to maintain real-time performance
+                try:
+                    self.processing_queue.get_nowait()
+                    self.processing_queue.put_nowait(audio_chunk)
+                except queue.Empty:
+                    pass
+            
+            # Get result if available
+            try:
+                result = self.result_queue.get_nowait()
+                return result
+            except queue.Empty:
+                # Return zeros if no result ready (maintain real-time)
+                return {
+                    InstrumentType.VOCALS: np.zeros_like(audio_chunk),
+                    InstrumentType.DRUMS: np.zeros_like(audio_chunk),
+                    InstrumentType.BASS: np.zeros_like(audio_chunk),
+                    InstrumentType.OTHER: np.zeros_like(audio_chunk)
+                }
+                
+        except Exception as e:
+            logger.error(f"Error processing audio chunk: {e}")
+            return {}
+    
+    def _processing_loop(self):
+        """Main processing loop running in separate thread"""
+        while self.is_processing:
+            try:
+                # Get audio chunk with timeout
+                audio_chunk = self.processing_queue.get(timeout=0.1)
+                
+                # Process with overlap-add
+                separated_sources = self._separate_chunk_with_overlap(audio_chunk)
+                
+                # Put result in queue (non-blocking)
+                try:
+                    self.result_queue.put_nowait(separated_sources)
+                except queue.Full:
+                    # Drop oldest result if queue is full
+                    try:
+                        self.result_queue.get_nowait()
+                        self.result_queue.put_nowait(separated_sources)
+                    except queue.Empty:
+                        pass
+                
+            except queue.Empty:
+                continue
+            except Exception as e:
+                logger.error(f"Error in processing loop: {e}")
+    
+    def _separate_chunk_with_overlap(self, audio_chunk: np.ndarray) -> Dict[InstrumentType, np.ndarray]:
+        """Separate audio chunk using overlap-add for continuity"""
+        try:
+            # Update input buffer with overlap
+            buffer_length = len(self.input_buffer)
+            chunk_length = len(audio_chunk)
+            
+            # Shift existing data
+            self.input_buffer[:-chunk_length] = self.input_buffer[chunk_length:]
+            
+            # Add new chunk
+            self.input_buffer[-chunk_length:] = audio_chunk
+            
+            # Process the full buffer
+            if self.separation_model is not None:
+                # Convert to tensor and process
+                input_tensor = torch.FloatTensor(self.input_buffer).unsqueeze(0).unsqueeze(0).to(self.device)
+                
+                with torch.no_grad():
+                    separated_tensor = self.separation_model(input_tensor)
+                
+                # Convert back to numpy and extract the latest chunk
+                separated_np = separated_tensor.cpu().numpy()
+                
+                # Extract separated sources for the current chunk
+                separated_sources = {}
+                source_names = [InstrumentType.VOCALS, InstrumentType.DRUMS, 
+                              InstrumentType.BASS, InstrumentType.OTHER]
+                
+                for i, source_type in enumerate(source_names):
+                    if i < separated_np.shape[2]:  # Check if source exists
+                        # Extract the latest chunk from the separated output
+                        source_audio = separated_np[0, 0, i, -chunk_length:]
+                        separated_sources[source_type] = source_audio
+                    else:
+                        separated_sources[source_type] = np.zeros_like(audio_chunk)
+                
+                return separated_sources
+            
+            else:
+                # Fallback: simple harmonic-percussive separation
+                return self._simple_separation(audio_chunk)
+                
+        except Exception as e:
+            logger.error(f"Error in chunk separation: {e}")
+            return self._simple_separation(audio_chunk)
+    
+    def _simple_separation(self, audio_chunk: np.ndarray) -> Dict[InstrumentType, np.ndarray]:
+        """Simple fallback separation using harmonic-percussive decomposition"""
+        try:
+            # Apply window to reduce artifacts
+            windowed = audio_chunk * np.hanning(len(audio_chunk))
+            
+            # Simple spectral separation
+            stft = librosa.stft(windowed, n_fft=1024, hop_length=256)
+            
+            # Harmonic-percussive separation
+            harmonic, percussive = librosa.decompose.hpss(stft, margin=2.0)
+            
+            # Convert back to time domain
+            harmonic_audio = librosa.istft(harmonic, hop_length=256, length=len(audio_chunk))
+            percussive_audio = librosa.istft(percussive, hop_length=256, length=len(audio_chunk))
+            
+            # Estimate vocals (mid-high frequency harmonic content)
+            vocal_filter = self._create_vocal_filter(stft.shape[0])
+            vocal_stft = harmonic * vocal_filter[:, None]
+            vocal_audio = librosa.istft(vocal_stft, hop_length=256, length=len(audio_chunk))
+            
+            # Estimate bass (low frequency harmonic content) 
+            bass_filter = self._create_bass_filter(stft.shape[0])
+            bass_stft = harmonic * bass_filter[:, None]
+            bass_audio = librosa.istft(bass_stft, hop_length=256, length=len(audio_chunk))
+            
+            return {
+                InstrumentType.VOCALS: vocal_audio,
+                InstrumentType.DRUMS: percussive_audio,
+                InstrumentType.BASS: bass_audio,
+                InstrumentType.OTHER: harmonic_audio - vocal_audio - bass_audio
+            }
+            
+        except Exception as e:
+            logger.error(f"Error in simple separation: {e}")
+            # Return silent tracks as fallback
+            return {
+                InstrumentType.VOCALS: np.zeros_like(audio_chunk),
+                InstrumentType.DRUMS: np.zeros_like(audio_chunk),
+                InstrumentType.BASS: np.zeros_like(audio_chunk),
+                InstrumentType.OTHER: audio_chunk.copy()  # Full mix as fallback
+            }
+    
+    def _create_vocal_filter(self, num_freq_bins: int) -> np.ndarray:
+        """Create frequency filter for vocal isolation"""
+        # Vocal range typically 80Hz - 1100Hz, emphasize 200-800Hz
+        freq_filter = np.ones(num_freq_bins)
+        vocal_start = int(0.15 * num_freq_bins)  # ~200Hz at 44.1kHz
+        vocal_end = int(0.4 * num_freq_bins)     # ~800Hz at 44.1kHz
+        
+        # Apply vocal emphasis
+        freq_filter[:vocal_start] *= 0.3
+        freq_filter[vocal_start:vocal_end] *= 1.2
+        freq_filter[vocal_end:] *= 0.6
+        
+        return freq_filter
+    
+    def _create_bass_filter(self, num_freq_bins: int) -> np.ndarray:
+        """Create frequency filter for bass isolation"""
+        # Bass range typically 20Hz - 250Hz
+        freq_filter = np.zeros(num_freq_bins)
+        bass_end = int(0.12 * num_freq_bins)  # ~250Hz at 44.1kHz
+        
+        # Strong low-frequency emphasis
+        freq_filter[:bass_end] = 1.0
+        # Gentle rolloff
+        rolloff_end = int(0.2 * num_freq_bins)
+        if rolloff_end > bass_end:
+            rolloff_range = np.arange(bass_end, min(rolloff_end, num_freq_bins))
+            freq_filter[rolloff_range] = np.linspace(1.0, 0.1, len(rolloff_range))
+        
+        return freq_filter
+    
+    async def _load_separation_model(self):
+        """Load the neural network separation model"""
+        try:
+            # In production, would load actual trained model
+            # For now, create a simple ConvTasNet model
+            self.separation_model = ConvTasNet(num_sources=4, encoder_dim=256)
+            self.separation_model = self.separation_model.to(self.device)
+            self.separation_model.eval()
+            
+            logger.info("✅ Separation model loaded successfully")
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to load separation model: {e}")
+            self.separation_model = None
 
 @dataclass
 class SeparatedTrack:
