@@ -238,6 +238,188 @@ class ChallengeGenerator:
                 tags=["monetization", "revenue", "business"]
             ),
             
+            # Monthly Creative Challenges with Rewards
+            ChallengeTemplate(
+                template_id="monthly_creative_master",
+                title="Monthly Creative Masterpiece",
+                description="Create exceptional content following this month's creative theme with potential for cash rewards",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.ADVANCED,
+                category="monthly_creative",
+                target_metric="creative_quality_score",
+                target_value=90.0,
+                reward_points=1000,
+                duration_hours=720,  # 30 days
+                tags=["monthly", "creative", "masterpiece", "cash_rewards"],
+                metadata={
+                    "cash_prize_pool": 1000,
+                    "community_voting": True,
+                    "expert_judging": True,
+                    "submission_deadline_buffer": 48  # hours before end
+                }
+            ),
+            
+            ChallengeTemplate(
+                template_id="monthly_innovation_challenge",
+                title="Monthly Innovation Showcase",
+                description="Showcase innovative content creation techniques and win exclusive rewards",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.EXPERT,
+                category="monthly_creative",
+                target_metric="innovation_score",
+                target_value=85.0,
+                reward_points=1200,
+                duration_hours=720,
+                tags=["monthly", "innovation", "creative", "showcase"],
+                metadata={
+                    "feature_unlock_reward": "advanced_ai_tools",
+                    "collaboration_opportunities": True,
+                    "platform_highlight": True
+                }
+            ),
+            
+            # Technical SEO Challenges
+            ChallengeTemplate(
+                template_id="seo_optimization_master",
+                title="SEO Optimization Master",
+                description="Improve your content's search ranking by {target_value}% through SEO optimization",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.ADVANCED,
+                category="technical_seo",
+                target_metric="seo_ranking_improvement",
+                target_value=25.0,
+                reward_points=800,
+                duration_hours=720,
+                tags=["seo", "technical", "optimization", "ranking"],
+                metadata={
+                    "tracking_tools": ["google_analytics", "search_console"],
+                    "keyword_targets": 10,
+                    "content_quality_requirement": 85
+                }
+            ),
+            
+            ChallengeTemplate(
+                template_id="organic_traffic_booster",
+                title="Organic Traffic Booster",
+                description="Increase organic traffic to your content by {target_value}% using SEO best practices",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.INTERMEDIATE,
+                category="technical_seo",
+                target_metric="organic_traffic_increase",
+                target_value=40.0,
+                reward_points=600,
+                duration_hours=720,
+                tags=["seo", "traffic", "organic", "growth"],
+                metadata={
+                    "baseline_period": 30,  # days
+                    "verification_required": True,
+                    "seo_tools_unlock": True
+                }
+            ),
+            
+            # Revenue Optimization Challenges  
+            ChallengeTemplate(
+                template_id="revenue_optimization_expert",
+                title="Revenue Optimization Expert",
+                description="Optimize your monetization strategy to increase revenue by {target_value}%",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.EXPERT,
+                category="revenue_optimization",
+                target_metric="revenue_increase_percentage",
+                target_value=50.0,
+                reward_points=1500,
+                duration_hours=720,
+                tags=["revenue", "optimization", "monetization", "expert"],
+                metadata={
+                    "baseline_calculation": True,
+                    "multiple_streams_bonus": 200,  # extra points
+                    "conversion_tracking": True,
+                    "revenue_multiplier_reward": 1.2  # 20% boost for 30 days
+                }
+            ),
+            
+            ChallengeTemplate(
+                template_id="monetization_diversification",
+                title="Monetization Diversification Challenge",
+                description="Create {target_value} new revenue streams and optimize existing ones",
+                challenge_type=ChallengeType.MONTHLY,
+                difficulty=ChallengeDifficulty.ADVANCED,
+                category="revenue_optimization",
+                target_metric="new_revenue_streams",
+                target_value=3.0,
+                reward_points=900,
+                duration_hours=720,
+                tags=["monetization", "diversification", "revenue_streams"],
+                metadata={
+                    "stream_verification": True,
+                    "minimum_revenue_per_stream": 50,  # USD
+                    "creativity_bonus": True
+                }
+            ),
+            
+            # Global Competition Challenges
+            ChallengeTemplate(
+                template_id="global_creative_championship",
+                title="Global Creative Championship",
+                description="Compete with creators worldwide in the ultimate creative showcase",
+                challenge_type=ChallengeType.SEASONAL,
+                difficulty=ChallengeDifficulty.MASTER,
+                category="global_competition",
+                target_metric="global_ranking_score",
+                target_value=95.0,
+                reward_points=5000,
+                duration_hours=1440,  # 60 days
+                tags=["global", "competition", "championship", "seasonal"],
+                metadata={
+                    "prize_pool": 25000,  # USD
+                    "regional_qualifiers": True,
+                    "live_streaming": True,
+                    "multi_language": True,
+                    "expert_panel": True,
+                    "community_voting_weight": 0.3,
+                    "expert_voting_weight": 0.7
+                }
+            ),
+            
+            ChallengeTemplate(
+                template_id="seasonal_innovation_contest",
+                title="Seasonal Innovation Contest",
+                description="Special seasonal competition celebrating innovation and creativity",
+                challenge_type=ChallengeType.SEASONAL,
+                difficulty=ChallengeDifficulty.EXPERT,
+                category="global_competition",
+                target_metric="seasonal_innovation_score",
+                target_value=88.0,
+                reward_points=3000,
+                duration_hours=720,  # 30 days
+                tags=["seasonal", "innovation", "global", "contest"],
+                metadata={
+                    "seasonal_theme": True,
+                    "collaboration_allowed": True,
+                    "cross_platform_promotion": True,
+                    "influencer_partnerships": True
+                }
+            ),
+            
+            ChallengeTemplate(
+                template_id="milestone_celebration_event",
+                title="Platform Milestone Celebration",
+                description="Celebrate platform milestones with exclusive global events",
+                challenge_type=ChallengeType.SPECIAL_EVENT,
+                difficulty=ChallengeDifficulty.ADVANCED,
+                category="global_competition",
+                target_metric="milestone_participation_score",
+                target_value=80.0,
+                reward_points=2000,
+                duration_hours=336,  # 14 days
+                tags=["milestone", "celebration", "special_event", "global"],
+                metadata={
+                    "exclusive_features": True,
+                    "limited_edition_rewards": True,
+                    "anniversary_bonuses": True
+                }
+            ),
+            
             # Community Challenges
             ChallengeTemplate(
                 template_id="community_helper",
