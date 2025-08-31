@@ -1,0 +1,293 @@
+# Ainflue Production Alert Rules
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Production-ready alerting rules for monitoring
+
+groups:
+  - name: ainflue.infrastructure
+    rules:
+      - alert: ServiceDown
+        expr: up{job=~"ainflue-.*"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Ainflue service {{ $labels.job }} is down"
+          description: "Service {{ $labels.job }} has been down for more than 1 minute."
+          runbook_url: "https://docs.ainflue.com/runbooks/service-down"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{job="ainflue-api",status=~"5.."}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "High error rate on Ainflue API"
+          description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-error-rate"
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="ainflue-api"}[5m])) > 2
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High API response time"
+          description: "95th percentile response time is {{ $value }}s for the last 10 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-response-time"
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 10m
+        labels:
+          severity: warning
+          team: infrastructure
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value | humanizePercentage }} for the last 10 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-cpu"
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-memory"
+
+      - alert: DiskSpaceLow
+        expr: 100 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100) > 90
+        for: 5m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Low disk space"
+          description: "Disk usage is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/low-disk-space"
+
+  - name: ainflue.database
+    rules:
+      - alert: PostgreSQLDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: database
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL database is not reachable."
+          runbook_url: "https://docs.ainflue.com/runbooks/postgresql-down"
+
+      - alert: PostgreSQLHighConnections
+        expr: pg_stat_database_numbackends{datname="ainflue_platform_prod"} > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: database
+        annotations:
+          summary: "High PostgreSQL connections"
+          description: "PostgreSQL has {{ $value }} active connections."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-pg-connections"
+
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: database
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache is not reachable."
+          runbook_url: "https://docs.ainflue.com/runbooks/redis-down"
+
+      - alert: RedisHighMemoryUsage
+        expr: redis_memory_used_bytes / redis_memory_max_bytes * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          team: database
+        annotations:
+          summary: "High Redis memory usage"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/redis-high-memory"
+
+  - name: ainflue.application
+    rules:
+      - alert: AIProcessingQueueBacklog
+        expr: ainflue_ai_queue_size > 1000
+        for: 10m
+        labels:
+          severity: warning
+          team: ai
+        annotations:
+          summary: "AI processing queue backlog"
+          description: "AI processing queue has {{ $value }} items pending."
+          runbook_url: "https://docs.ainflue.com/runbooks/ai-queue-backlog"
+
+      - alert: ContentProtectionFailures
+        expr: rate(ainflue_protection_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          team: protection
+        annotations:
+          summary: "High content protection failure rate"
+          description: "Content protection failure rate is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/protection-failures"
+
+      - alert: PaymentProcessingErrors
+        expr: rate(ainflue_payment_errors_total[5m]) > 0.01
+        for: 3m
+        labels:
+          severity: critical
+          team: monetization
+        annotations:
+          summary: "Payment processing errors"
+          description: "Payment error rate is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/payment-errors"
+
+      - alert: HighUserChurnRate
+        expr: ainflue_user_churn_rate > 0.05
+        for: 30m
+        labels:
+          severity: warning
+          team: product
+        annotations:
+          summary: "High user churn rate"
+          description: "User churn rate is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/high-churn"
+
+  - name: ainflue.security
+    rules:
+      - alert: SecurityBreach
+        expr: increase(ainflue_security_violations_total[5m]) > 10
+        for: 1m
+        labels:
+          severity: critical
+          team: security
+        annotations:
+          summary: "Potential security breach detected"
+          description: "{{ $value }} security violations detected in the last 5 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/security-breach"
+
+      - alert: HighFailedLogins
+        expr: rate(ainflue_failed_logins_total[5m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+          team: security
+        annotations:
+          summary: "High failed login attempts"
+          description: "{{ $value }} failed login attempts per second."
+          runbook_url: "https://docs.ainflue.com/runbooks/failed-logins"
+
+      - alert: APIRateLimitExceeded
+        expr: rate(ainflue_rate_limit_exceeded_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "API rate limit frequently exceeded"
+          description: "Rate limit exceeded {{ $value }} times per second."
+          runbook_url: "https://docs.ainflue.com/runbooks/rate-limit"
+
+  - name: ainflue.business
+    rules:
+      - alert: RevenueDrop
+        expr: ((ainflue_revenue_total - ainflue_revenue_total offset 1h) / ainflue_revenue_total offset 1h) * 100 < -20
+        for: 30m
+        labels:
+          severity: warning
+          team: business
+        annotations:
+          summary: "Significant revenue drop detected"
+          description: "Revenue has dropped by {{ $value | humanizePercentage }} in the last hour."
+          runbook_url: "https://docs.ainflue.com/runbooks/revenue-drop"
+
+      - alert: LowActiveUsers
+        expr: ainflue_active_users < 100
+        for: 15m
+        labels:
+          severity: warning
+          team: product
+        annotations:
+          summary: "Low active user count"
+          description: "Only {{ $value }} active users currently."
+          runbook_url: "https://docs.ainflue.com/runbooks/low-active-users"
+
+  - name: ainflue.external
+    rules:
+      - alert: ExternalAPIDown
+        expr: probe_success{job="blackbox"} == 0
+        for: 3m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "External endpoint {{ $labels.instance }} is down"
+          description: "External endpoint has been unreachable for 3 minutes."
+          runbook_url: "https://docs.ainflue.com/runbooks/external-api-down"
+
+      - alert: StripeAPIErrors
+        expr: rate(ainflue_stripe_errors_total[5m]) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          team: monetization
+        annotations:
+          summary: "Stripe API errors detected"
+          description: "Stripe API error rate is {{ $value | humanizePercentage }}."
+          runbook_url: "https://docs.ainflue.com/runbooks/stripe-errors"
+
+      - alert: OpenAIAPIQuotaExceeded
+        expr: ainflue_openai_quota_exceeded > 0
+        for: 1m
+        labels:
+          severity: warning
+          team: ai
+        annotations:
+          summary: "OpenAI API quota exceeded"
+          description: "OpenAI API quota has been exceeded."
+          runbook_url: "https://docs.ainflue.com/runbooks/openai-quota"
+
+  - name: ainflue.monitoring
+    rules:
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Prometheus is down"
+          description: "Prometheus monitoring system is not reachable."
+          runbook_url: "https://docs.ainflue.com/runbooks/prometheus-down"
+
+      - alert: GrafanaDown
+        expr: up{job="grafana"} == 0
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Grafana is down"
+          description: "Grafana dashboard system is not reachable."
+          runbook_url: "https://docs.ainflue.com/runbooks/grafana-down"
+
+      - alert: AlertManagerDown
+        expr: up{job="alertmanager"} == 0
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "AlertManager is down"
+          description: "AlertManager is not reachable - alerts may not be delivered."
+          runbook_url: "https://docs.ainflue.com/runbooks/alertmanager-down"
