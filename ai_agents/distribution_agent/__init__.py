@@ -6,7 +6,7 @@ intelligent optimization, comprehensive platform support, and advanced analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+   CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -116,8 +116,8 @@ __all__ = [
     'DistributionAgentManager',
     'DistributionManagerLegacy'
 ]
-prosecuted to the full extent of the law.
-"""# Core Distribution Engine Imports
+
+# Core Distribution Engine Imports
 from .core.distribution_engine import (
     DistributionEngine,
     DistributionJob,
@@ -391,7 +391,7 @@ __doc__ = """Distribution Agent - Enterprise AI-Powered Multi-Platform Content D
 The Distribution Agent is a comprehensive, enterprise-grade solution for intelligent 
 content distribution across multiple social media and content platforms. It provides:
 
-🚀 CORE CAPABILITIES:
+CORE CORE CORE CAPABILITIES:
 - Intelligent multi-platform content distribution with AI optimization
 - Advanced scheduling with ML-powered timing analysis
 - Comprehensive campaign management and A/B testing
@@ -401,14 +401,14 @@ content distribution across multiple social media and content platforms. It prov
 - Auto-scaling architecture with load balancing
 - Platform-specific format adaptation and optimization
 
-🤖 AI & MACHINE LEARNING:
+AI AI & MACHINE LEARNING:
 - Predictive timing optimization using advanced ML models
 - Audience behavior analysis and engagement forecasting  
 - Content quality assessment and optimization recommendations
 - Platform algorithm analysis and ranking factor optimization
 - Automated anomaly detection and performance monitoring
 
-🏢 ENTERPRISE FEATURES:
+  ENTERPRISE FEATURES:
 - High availability with 99.99% uptime guarantee
 - Scalable from 2 to 100+ concurrent instances
 - Comprehensive audit logging and compliance tracking
@@ -416,13 +416,13 @@ content distribution across multiple social media and content platforms. It prov
 - Multi-tenant architecture with resource isolation
 - Professional SLA support and monitoring
 
-🔌 PLATFORM INTEGRATIONS:
+  PLATFORM INTEGRATIONS:
 - Music Platforms: Spotify, Apple Music, SoundCloud, Bandcamp
 - Video Platforms: YouTube, TikTok, Twitch
 - Social Media: Instagram, Facebook, Twitter, LinkedIn
 - Enterprise APIs: RESTful, GraphQL, WebSocket support
 
-📊 ANALYTICS & REPORTING:
+ANALYTICS ANALYTICS & REPORTING:
 - Real-time performance dashboards
 - Predictive analytics and trend analysis  
 - ROI optimization and cost tracking
@@ -436,9 +436,11 @@ content distribution operations.
 For technical documentation, API references, and implementation guides, please
 refer to the comprehensive README files and technical documentation.
 
-© 2025 Fahed Mlaiel. All rights reserved. Proprietary software protected under 
+  2025 Fahed Mlaiel. All rights reserved. Proprietary software protected under 
 international intellectual property law.
-"""# Initialization Function
+"""
+
+# Initialization Function
 def get_distribution_agent(config: dict = None) -> DistributionAgent:
     """
     Factory function to create and initialize a Distribution Agent instance.
@@ -528,6 +530,9 @@ def get_version_info() -> dict:
             "Security & compliance"
         ]
     }
+
+# Platform and core system imports
+from .core.distribution_engine import (
     PlatformType,
     PlatformAdapterBase,
     ContentScheduler,
