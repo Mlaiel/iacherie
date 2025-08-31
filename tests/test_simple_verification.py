@@ -20,7 +20,7 @@ def test_python_version():
 
 def test_project_structure():
     """Test de la structure du projet"""
-    project_root = Path(__file__).parent.parent.parent
+    project_root = Path(__file__).parent.parent
     
     # Vérifier que les dossiers principaux existent
     assert (project_root / "ai").exists(), "Dossier ai/ manquant"
