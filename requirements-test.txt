@@ -8,6 +8,31 @@ pytest-cov>=6.0.0
 pytest-mock>=3.12.0
 pytest-benchmark>=4.0.0
 
+# Tests avancés et spécialisés
+pytest-xdist>=3.5.0  # Tests parallèles
+pytest-html>=4.1.0   # Rapports HTML
+pytest-json-report>=1.5.0  # Rapports JSON
+pytest-timeout>=2.2.0  # Timeout management
+pytest-rerunfailures>=14.0  # Re-run failed tests
+pytest-repeat>=0.9.3  # Repeat tests for stability
+
+# Tests de charge et performance
+locust>=2.21.0  # Load testing
+py-spy>=0.3.14  # Performance profiling
+
+# Tests de sécurité
+bandit>=1.7.6  # Security linting
+safety>=3.0.0  # Dependency vulnerability scanning
+semgrep>=1.50.0  # Static analysis security
+
+# Tests end-to-end
+playwright>=1.40.0  # Browser automation
+selenium>=4.15.0   # Web testing
+
+# Chaos engineering
+chaos-toolkit>=1.16.0
+chaostoolkit-lib>=1.31.0
+
 # Dépendances pour les tests IA
 numpy>=1.24.0
 pandas>=2.0.0
@@ -17,11 +42,20 @@ scikit-learn>=1.3.0
 requests>=2.31.0
 aiohttp>=3.9.0
 Pillow>=10.0.0
+faker>=22.0.0  # Test data generation
+factory-boy>=3.3.0  # Model factories
+hypothesis>=6.92.0  # Property-based testing
+
+# Monitoring et métriques
+psutil>=5.9.0  # System metrics
+memory-profiler>=0.61.0  # Memory usage
+pympler>=0.9  # Memory analysis
 
 # Outils de développement
 black>=23.0.0
 isort>=5.12.0
 flake8>=6.0.0
+mypy>=1.7.0
 
 # Logging et monitoring
 structlog>=23.1.0
