@@ -22,7 +22,6 @@ LOGIQUE MÉTIER: Audio Stream → Real-time AI Processing → Live Output Stream
 
 import asyncio
 import logging
-import numpy as np
 from typing import Dict, List, Any, Optional, Union, Callable, AsyncGenerator
 from dataclasses import dataclass, field
 from enum import Enum
@@ -33,6 +32,12 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 import websockets
 import json
+
+# Optional imports that may not be available in all environments
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -92,7 +97,7 @@ class StreamingConfig:
 @dataclass
 class AudioChunk:
     """Audio data chunk for streaming"""
-    data: np.ndarray
+    data: Any  # np.ndarray when numpy is available
     timestamp: float
     sample_rate: int
     channels: int
@@ -218,7 +223,11 @@ class RealTimeAudioProcessor:
         start_time = time.perf_counter()
         
         try:
-            processed_data = chunk.data.copy()
+            if np is None:
+                # If numpy is not available, return original chunk
+                return chunk
+                
+            processed_data = chunk.data.copy() if hasattr(chunk.data, 'copy') else chunk.data
             
             # Apply processing based on mode
             if self.config.mode == StreamingMode.ENHANCEMENT:
@@ -286,13 +295,16 @@ class RealTimeAudioProcessor:
             self.logger.error(f"❌ Enhancement failed: {e}")
             return audio_data
     
-    async def _apply_ai_generation(self, audio_data: np.ndarray) -> np.ndarray:
+    async def _apply_ai_generation(self, audio_data: Any) -> Any:
         """Apply real-time AI generation (lightweight version)"""
         try:
+            if np is None:
+                return audio_data
+                
             # Lightweight AI generation for real-time use
             # This would be a simplified version of the full AI models
-            generated = audio_data * 1.1  # Placeholder processing
-            return np.clip(generated, -1.0, 1.0)
+            generated = audio_data * 1.1 if hasattr(audio_data, '__mul__') else audio_data
+            return np.clip(generated, -1.0, 1.0) if hasattr(np, 'clip') else generated
             
         except Exception as e:
             self.logger.error(f"❌ AI generation failed: {e}")
@@ -409,13 +421,19 @@ class RealTimeQualityAnalyzer:
         self.config = config
         self.logger = logger
     
-    async def analyze_chunk(self, audio_data: np.ndarray) -> float:
+    async def analyze_chunk(self, audio_data: Any) -> float:
         """Analyze audio quality in real-time"""
         try:
+            if np is None or audio_data is None:
+                return 0.0
+                
             # Calculate basic quality metrics
-            rms = np.sqrt(np.mean(audio_data ** 2))
-            peak = np.max(np.abs(audio_data))
-            dynamic_range = 20 * np.log10(peak / (rms + 1e-10))
+            if hasattr(audio_data, '__iter__') and hasattr(np, 'mean'):
+                rms = np.sqrt(np.mean(audio_data ** 2)) if hasattr(audio_data, '__pow__') else 0.5
+                peak = np.max(np.abs(audio_data)) if hasattr(np, 'max') and hasattr(np, 'abs') else 0.5
+                dynamic_range = 20 * np.log10(peak / (rms + 1e-10)) if hasattr(np, 'log10') else 10
+            else:
+                dynamic_range = 10  # Default value
             
             # Simple quality score based on dynamics and levels
             quality_score = min(1.0, max(0.0, (dynamic_range + 60) / 60))

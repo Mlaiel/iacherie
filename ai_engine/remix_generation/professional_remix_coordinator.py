@@ -22,7 +22,6 @@ LOGIQUE MÉTIER: Audio Input → AI Analysis → Model Selection → Generation 
 
 import asyncio
 import logging
-import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -31,6 +30,12 @@ import json
 import uuid
 from pathlib import Path
 import time
+
+# Optional import for numpy (will be imported when needed)
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 # Configure logging
 logger = logging.getLogger(__name__)
