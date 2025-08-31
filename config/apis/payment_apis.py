@@ -281,6 +281,61 @@ COINBASE_CONFIG = PaymentAPIConfig(
     }
 )
 
+# BitPay Configuration (Cryptocurrency - 15+ supported)
+BITPAY_CONFIG = PaymentAPIConfig(
+    provider_name="bitpay",
+    provider_type=PaymentProviderType.CRYPTOCURRENCY,
+    base_url="https://bitpay.com/api",
+    api_version="v1",
+    api_key=os.getenv("BITPAY_API_TOKEN"),
+    webhook_secret=os.getenv("BITPAY_WEBHOOK_SECRET"),
+    supported_methods=[PaymentMethod.CRYPTO],
+    supported_currencies=[
+        "BTC", "ETH", "LTC", "BCH", "XRP", "ADA", "DOT", "UNI", "LINK", 
+        "MATIC", "USDC", "USDT", "DAI", "BUSD", "SHIB", "DOGE", "XLM"
+    ],
+    processing_fee_percentage=1.0,
+    settlement_delay_days=0,  # Instant for crypto
+    min_amount=Decimal("1.00"),
+    max_amount=Decimal("100000.00"),
+    environments={
+        "development": {
+            "base_url": "https://test.bitpay.com/api"
+        },
+        "staging": {
+            "base_url": "https://test.bitpay.com/api"
+        }
+    }
+)
+
+# Crypto.com Pay Configuration (Cryptocurrency - Wallet Integration)
+CRYPTO_COM_PAY_CONFIG = PaymentAPIConfig(
+    provider_name="crypto_com_pay",
+    provider_type=PaymentProviderType.CRYPTOCURRENCY,
+    base_url="https://pay-api.crypto.com",
+    api_version="v1",
+    api_key=os.getenv("CRYPTO_COM_PAY_API_KEY"),
+    secret_key=os.getenv("CRYPTO_COM_PAY_SECRET_KEY"),
+    webhook_secret=os.getenv("CRYPTO_COM_PAY_WEBHOOK_SECRET"),
+    supported_methods=[PaymentMethod.CRYPTO],
+    supported_currencies=[
+        "BTC", "ETH", "CRO", "USDC", "USDT", "BNB", "ADA", "DOT", "MATIC", 
+        "LINK", "UNI", "AAVE", "COMP", "SOL", "AVAX"
+    ],
+    processing_fee_percentage=0.5,  # Lower fees for Crypto.com ecosystem
+    settlement_delay_days=0,  # Instant for crypto
+    min_amount=Decimal("0.10"),
+    max_amount=Decimal("500000.00"),
+    environments={
+        "development": {
+            "base_url": "https://uat-pay-api.crypto.com"
+        },
+        "staging": {
+            "base_url": "https://uat-pay-api.crypto.com"
+        }
+    }
+)
+
 # Adyen Configuration (Global payment platform)
 ADYEN_CONFIG = PaymentAPIConfig(
     provider_name="adyen",
@@ -329,6 +384,8 @@ PAYMENT_CONFIGS: Dict[str, PaymentAPIConfig] = {
     "apple_pay": APPLE_PAY_CONFIG,
     "google_pay": GOOGLE_PAY_CONFIG,
     "coinbase": COINBASE_CONFIG,
+    "bitpay": BITPAY_CONFIG,
+    "crypto_com_pay": CRYPTO_COM_PAY_CONFIG,
     "adyen": ADYEN_CONFIG
 }
 
