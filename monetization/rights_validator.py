@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types of content rights"""    COPYRIGHT = "copyright"
+    """Types of content rights"""
+    COPYRIGHT = "copyright"
     LICENSING = "licensing"
     DISTRIBUTION = "distribution"
     COMMERCIAL = "commercial"
@@ -33,7 +34,8 @@ class RightType(Enum):
 
 
 class RightStatus(Enum):
-    """Status of rights"""    VALID = "valid"
+    """Status of rights"""
+    VALID = "valid"
     INVALID = "invalid"
     EXPIRED = "expired"
     PENDING = "pending"
@@ -42,7 +44,8 @@ class RightStatus(Enum):
 
 
 class ValidationResult(Enum):
-    """Results of rights validation"""    APPROVED = "approved"
+    """Results of rights validation"""
+    APPROVED = "approved"
     REJECTED = "rejected"
     REQUIRES_REVIEW = "requires_review"
     INSUFFICIENT_RIGHTS = "insufficient_rights"
@@ -51,7 +54,8 @@ class ValidationResult(Enum):
 
 @dataclass
 class ContentRight:
-    """Individual content right"""    right_id: str
+    """Individual content right"""
+    right_id: str
     content_id: int
     owner_id: int
     right_type: RightType
@@ -68,7 +72,8 @@ class ContentRight:
 
 @dataclass
 class RightsChain:
-    """Chain of rights for content"""    content_id: int
+    """Chain of rights for content"""
+    content_id: int
     original_owner: int
     current_owner: int
     rights_history: List[ContentRight]
@@ -79,7 +84,8 @@ class RightsChain:
 
 @dataclass
 class ValidationRequest:
-    """Rights validation request"""    request_id: str
+    """Rights validation request"""
+    request_id: str
     content_id: int
     requester_id: int
     requested_rights: List[RightType]
@@ -93,7 +99,8 @@ class ValidationRequest:
 
 @dataclass
 class ValidationReport:
-    """Rights validation report"""    request_id: str
+    """Rights validation report"""
+    request_id: str
     content_id: int
     result: ValidationResult
     validated_rights: List[RightType]
@@ -120,7 +127,8 @@ class RightsValidator:
     - Historical rights tracking
     """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize rights validator"""        self.config = config or {}
+        """Initialize rights validator"""
+        self.config = config or {}
         
         # Rights storage
         self.content_rights: Dict[int, RightsChain] = {}  # content_id -> RightsChain
@@ -175,7 +183,8 @@ class RightsValidator:
         requested_rights: Optional[List[str]] = None,
         intended_use: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """        Quick validation for licensing rights
+        """
+        Quick validation for licensing rights
         
         Args:
             content_id: Content ID to validate
@@ -185,7 +194,8 @@ class RightsValidator:
             
         Returns:
             bool: True if licensing rights are valid
-        """        try:
+        """
+        try:
             # Create validation request
             request = ValidationRequest(
                 request_id=f"quick_val_{content_id}_{datetime.utcnow().timestamp()}",
@@ -208,14 +218,16 @@ class RightsValidator:
             return False
     
     async def validate_rights(self, request: ValidationRequest) -> ValidationReport:
-        """        Comprehensive rights validation
+        """
+        Comprehensive rights validation
         
         Args:
             request: Validation request with all parameters
             
         Returns:
             ValidationReport: Detailed validation report
-        """        start_time = datetime.utcnow()
+        """
+        start_time = datetime.utcnow()
         
         try:
             # Store validation request
@@ -330,7 +342,8 @@ class RightsValidator:
         owner_id: int,
         rights: List[Dict[str, Any]]
     ) -> bool:
-        """        Register rights for content
+        """
+        Register rights for content
         
         Args:
             content_id: Content ID
@@ -339,7 +352,8 @@ class RightsValidator:
             
         Returns:
             bool: True if registration successful
-        """        try:
+        """
+        try:
             # Create rights chain if not exists
             if content_id not in self.content_rights:
                 self.content_rights[content_id] = RightsChain(
@@ -390,7 +404,8 @@ class RightsValidator:
         rights_to_transfer: List[RightType],
         transfer_terms: Dict[str, Any]
     ) -> bool:
-        """        Transfer rights between owners
+        """
+        Transfer rights between owners
         
         Args:
             content_id: Content ID
@@ -401,7 +416,8 @@ class RightsValidator:
             
         Returns:
             bool: True if transfer successful
-        """        try:
+        """
+        try:
             if content_id not in self.content_rights:
                 return False
             
@@ -480,10 +496,12 @@ class RightsValidator:
             return False
     
     async def get_validation_report(self, request_id: str) -> Optional[ValidationReport]:
-        """Get validation report by request ID"""        return self.validation_reports.get(request_id)
+        """Get validation report by request ID"""
+        return self.validation_reports.get(request_id)
     
     async def get_content_rights(self, content_id: int) -> Optional[Dict[str, Any]]:
-        """Get rights information for content"""        try:
+        """Get rights information for content"""
+        try:
             if content_id not in self.content_rights:
                 return None
             
@@ -524,7 +542,8 @@ class RightsValidator:
             return None
     
     async def _get_or_create_rights_chain(self, content_id: int) -> RightsChain:
-        """Get or create rights chain for content"""        if content_id not in self.content_rights:
+        """Get or create rights chain for content"""
+        if content_id not in self.content_rights:
             # Create default rights chain (assume content owner has all rights)
             self.content_rights[content_id] = RightsChain(
                 content_id=content_id,
@@ -542,7 +561,8 @@ class RightsValidator:
         requester_id: int,
         rights_chain: RightsChain
     ) -> bool:
-        """Verify ownership rights"""        try:
+        """Verify ownership rights"""
+        try:
             # Check if requester is current owner
             if rights_chain.current_owner == requester_id:
                 return True
@@ -571,7 +591,8 @@ class RightsValidator:
         right_type: RightType,
         rights_chain: RightsChain
     ) -> Dict[str, Any]:
-        """Validate individual right type"""        result = {
+        """Validate individual right type"""
+        result = {
             "valid": False,
             "issues": [],
             "warnings": []
@@ -639,7 +660,8 @@ class RightsValidator:
         request: ValidationRequest,
         rights_chain: RightsChain
     ) -> List[Dict[str, Any]]:
-        """Check for rights conflicts"""        conflicts = []
+        """Check for rights conflicts"""
+        conflicts = []
         
         try:
             # Check for exclusive rights conflicts
@@ -690,7 +712,8 @@ class RightsValidator:
         request: ValidationRequest,
         rights_chain: RightsChain
     ) -> bool:
-        """Validate territory restrictions"""        try:
+        """Validate territory restrictions"""
+        try:
             # For worldwide requests, need worldwide or specific territory rights
             if request.territory == "worldwide":
                 # Check if requester has worldwide rights
@@ -718,7 +741,8 @@ class RightsValidator:
         request: ValidationRequest,
         rights_chain: RightsChain
     ) -> bool:
-        """Validate commercial use rights"""        try:
+        """Validate commercial use rights"""
+        try:
             # Check for commercial or higher level rights
             commercial_rights = [RightType.COMMERCIAL, RightType.COPYRIGHT, RightType.LICENSING]
             
@@ -742,7 +766,8 @@ class RightsValidator:
         request: ValidationRequest,
         report: ValidationReport
     ) -> List[str]:
-        """Generate recommendations based on validation results"""        recommendations = []
+        """Generate recommendations based on validation results"""
+        recommendations = []
         
         try:
             if report.result == ValidationResult.REJECTED:
@@ -784,7 +809,8 @@ class RightsValidator:
         report: ValidationReport,
         start_time: datetime
     ) -> None:
-        """Update validation metrics"""        try:
+        """Update validation metrics"""
+        try:
             self.metrics["total_validations"] += 1
             
             if report.result == ValidationResult.APPROVED:
@@ -808,7 +834,8 @@ class RightsValidator:
             logger.error(f"Error updating metrics: {e}")
     
     def get_validator_stats(self) -> Dict[str, Any]:
-        """Get rights validator statistics"""        try:
+        """Get rights validator statistics"""
+        try:
             total_content = len(self.content_rights)
             total_rights = sum(len(chain.active_rights) for chain in self.content_rights.values())
             
