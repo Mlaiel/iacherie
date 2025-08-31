@@ -278,7 +278,8 @@ class StorageFactory:
     def create_enterprise_manager(
         config: Optional[Dict[str, Any]] = None
     ) -> StorageManager:
-        """Create enterprise storage manager with full feature set"""        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
+        """Create enterprise storage manager with full feature set"""
+        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
         return StorageManager(final_config)
     
     @staticmethod
