@@ -44,9 +44,40 @@ except ImportError as e:
     print(f"Warning: Could not import some NLP classes: {e}")
     # Create dummy classes for missing imports
     class DummyClass:
-        pass
+        def __init__(self, *args, **kwargs):
+            pass
+        def __call__(self, *args, **kwargs):
+            return self
+        def __getattr__(self, name):
+            return lambda *args, **kwargs: None
+    
+    # Define all missing classes as DummyClass
     AdvancedContentAnalyzer = DummyClass
+    SentimentAnalyzer = DummyClass
+    TopicAnalyzer = DummyClass
+    AnalysisResult = DummyClass
     AdvancedClassificationEngine = DummyClass
+    ClassificationResult = DummyClass
+    AdvancedExtractionEngine = DummyClass
+    ExtractionResult = DummyClass
+    AdvancedFingerprintEngine = DummyClass
+    AdvancedContentGenerator = DummyClass
+    GenerationResult = DummyClass
+    EmotionDetector = DummyClass
+    SentimentAnalysisResult = DummyClass
+    AdvancedSEOOptimizer = DummyClass
+    AdvancedTranslationEngine = DummyClass
+    TranslationResult = DummyClass
+    AdvancedContentProcessor = DummyClass
+    ProcessingResult = DummyClass
+    AdvancedMonitoringSystem = DummyClass
+    TextProcessor = DummyClass
+    Platform = DummyClass
+    Language = DummyClass
+    ContentType = DummyClass
+    ModelTrainer = DummyClass
+    ModelType = DummyClass
+    ModelStatus = DummyClass
 
 # Make aliases available globally for tests
 globals().update({

@@ -81,8 +81,12 @@ def setup_test_environment():
 
 def _create_test_audio_samples():
     """Generate standard test audio samples for testing"""
-    import numpy as np
-    import soundfile as sf
+    try:
+        import numpy as np
+        import soundfile as sf
+    except ImportError:
+        print("Warning: Audio processing dependencies not available, skipping audio sample creation")
+        return
     
     # Generate test signals
     duration = 5.0  # seconds
