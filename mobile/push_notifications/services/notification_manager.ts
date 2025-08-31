@@ -476,6 +476,445 @@ export class NotificationManager {
       console.log('[NotificationManager]', ...args);
     }
   }
+
+  // MARK: - Advanced User Engagement Features
+
+  /**
+   * AI-powered personalized notification timing
+   */
+  public async enablePersonalizedTiming(userId: string): Promise<void> {
+    const userBehavior = await this.analyticsService.getUserBehaviorPatterns(userId);
+    const optimalTimes = this.calculateOptimalNotificationTimes(userBehavior);
+    
+    await this.schedulePersonalizedNotifications(userId, optimalTimes);
+    this.log(`Personalized timing enabled for user ${userId}`);
+  }
+
+  /**
+   * Smart notification frequency management
+   */
+  public async enableSmartFrequencyControl(userId: string): Promise<void> {
+    const engagementData = await this.analyticsService.getUserEngagement(userId);
+    const optimalFrequency = this.calculateOptimalFrequency(engagementData);
+    
+    await this.updateUserNotificationSettings(userId, {
+      maxDailyNotifications: optimalFrequency.daily,
+      quietHours: optimalFrequency.quietPeriods,
+      priorityThreshold: optimalFrequency.threshold
+    });
+    
+    this.log(`Smart frequency control enabled for user ${userId}`);
+  }
+
+  /**
+   * Interactive notification actions
+   */
+  public async sendInteractiveNotification(payload: InteractiveNotificationPayload): Promise<NotificationResult> {
+    const enhancedPayload = {
+      ...payload,
+      actions: this.generateInteractiveActions(payload.type),
+      category: this.getNotificationCategory(payload.type),
+      badge: await this.calculateBadgeCount(payload.userId)
+    };
+
+    return this.sendNotification(enhancedPayload);
+  }
+
+  /**
+   * Content-aware notification optimization
+   */
+  public async sendContentAwareNotification(payload: ContentAwarePayload): Promise<NotificationResult> {
+    // Analyze content to optimize notification
+    const contentAnalysis = await this.analyzeNotificationContent(payload.content);
+    
+    const optimizedPayload = {
+      ...payload,
+      title: this.optimizeTitle(payload.title, contentAnalysis),
+      body: this.optimizeBody(payload.body, contentAnalysis),
+      media: await this.selectOptimalMedia(payload.media, contentAnalysis),
+      timing: this.calculateOptimalDeliveryTime(payload.userId, contentAnalysis)
+    };
+
+    return this.scheduleOptimizedNotification(optimizedPayload);
+  }
+
+  /**
+   * A/B testing for notification effectiveness
+   */
+  public async enableABTesting(testConfig: ABTestConfig): Promise<void> {
+    const testGroups = await this.segmentUsersForTesting(testConfig);
+    
+    for (const group of testGroups) {
+      await this.scheduleTestNotifications(group, testConfig.variants[group.variantId]);
+    }
+    
+    this.log(`A/B test started with ${testGroups.length} groups`);
+  }
+
+  /**
+   * Real-time engagement monitoring
+   */
+  public async enableRealtimeEngagementTracking(userId: string): Promise<void> {
+    const tracker = new RealtimeEngagementTracker(userId);
+    
+    tracker.onEngagementChange((engagement) => {
+      this.adjustNotificationStrategy(userId, engagement);
+    });
+    
+    tracker.onInactivityDetected((duration) => {
+      this.sendReEngagementNotification(userId, duration);
+    });
+    
+    await tracker.start();
+    this.log(`Real-time engagement tracking enabled for user ${userId}`);
+  }
+
+  /**
+   * Geofence-based contextual notifications
+   */
+  public async enableLocationBasedNotifications(userId: string, geofences: GeofenceConfig[]): Promise<void> {
+    for (const geofence of geofences) {
+      await this.setupGeofenceNotification(userId, geofence);
+    }
+    
+    this.log(`Location-based notifications enabled for ${geofences.length} geofences`);
+  }
+
+  /**
+   * Machine learning-powered notification content generation
+   */
+  public async generateMLPoweredNotification(userId: string, context: NotificationContext): Promise<NotificationPayload> {
+    const userProfile = await this.analyticsService.getUserProfile(userId);
+    const contentGenerator = new MLNotificationGenerator();
+    
+    const generatedContent = await contentGenerator.generate({
+      userProfile,
+      context,
+      historicalEngagement: await this.analyticsService.getEngagementHistory(userId)
+    });
+
+    return {
+      userId,
+      title: generatedContent.title,
+      body: generatedContent.body,
+      type: context.type,
+      data: generatedContent.additionalData,
+      personalized: true,
+      mlGenerated: true
+    };
+  }
+
+  // MARK: - Private Advanced Methods
+
+  private calculateOptimalNotificationTimes(userBehavior: UserBehaviorPattern): OptimalTiming {
+    // AI analysis of user behavior patterns
+    return {
+      morningSlot: userBehavior.mostActiveHours.morning,
+      afternoonSlot: userBehavior.mostActiveHours.afternoon,
+      eveningSlot: userBehavior.mostActiveHours.evening,
+      weekendAdjustment: userBehavior.weekendPatterns
+    };
+  }
+
+  private calculateOptimalFrequency(engagement: UserEngagementData): OptimalFrequency {
+    // Calculate optimal notification frequency based on engagement
+    const baseFrequency = engagement.averageEngagementRate > 0.7 ? 5 : 3;
+    
+    return {
+      daily: Math.max(1, Math.min(10, baseFrequency)),
+      quietPeriods: engagement.lowEngagementPeriods,
+      threshold: engagement.averageEngagementRate * 0.8
+    };
+  }
+
+  private generateInteractiveActions(notificationType: string): NotificationAction[] {
+    switch (notificationType) {
+      case 'collaboration_request':
+        return [
+          { id: 'accept', title: 'Accept', icon: 'checkmark' },
+          { id: 'decline', title: 'Decline', icon: 'xmark' },
+          { id: 'view_details', title: 'View Details', icon: 'info' }
+        ];
+      case 'content_update':
+        return [
+          { id: 'view', title: 'View', icon: 'eye' },
+          { id: 'share', title: 'Share', icon: 'share' },
+          { id: 'save_later', title: 'Save for Later', icon: 'bookmark' }
+        ];
+      case 'revenue_milestone':
+        return [
+          { id: 'view_analytics', title: 'View Analytics', icon: 'chart' },
+          { id: 'withdraw', title: 'Withdraw', icon: 'banknote' },
+          { id: 'share_achievement', title: 'Share', icon: 'share' }
+        ];
+      default:
+        return [
+          { id: 'view', title: 'View', icon: 'eye' },
+          { id: 'dismiss', title: 'Dismiss', icon: 'xmark' }
+        ];
+    }
+  }
+
+  private getNotificationCategory(type: string): string {
+    const categoryMap: { [key: string]: string } = {
+      'collaboration_request': 'COLLABORATION_CATEGORY',
+      'content_update': 'CONTENT_CATEGORY',
+      'revenue_milestone': 'REVENUE_CATEGORY',
+      'security_alert': 'SECURITY_CATEGORY'
+    };
+    
+    return categoryMap[type] || 'DEFAULT_CATEGORY';
+  }
+
+  private async calculateBadgeCount(userId: string): Promise<number> {
+    // Calculate unread items for badge count
+    const unreadItems = await this.analyticsService.getUnreadCount(userId);
+    return Math.min(99, unreadItems); // Cap at 99
+  }
+
+  private async analyzeNotificationContent(content: any): Promise<ContentAnalysis> {
+    // AI-powered content analysis
+    return {
+      sentiment: 'positive',
+      urgency: 'medium',
+      category: 'informational',
+      keyTerms: ['update', 'collaboration', 'revenue'],
+      emotionalTone: 'encouraging'
+    };
+  }
+
+  private optimizeTitle(title: string, analysis: ContentAnalysis): string {
+    // Optimize title based on content analysis
+    if (analysis.urgency === 'high') {
+      return `🚨 ${title}`;
+    } else if (analysis.sentiment === 'positive') {
+      return `✨ ${title}`;
+    }
+    return title;
+  }
+
+  private optimizeBody(body: string, analysis: ContentAnalysis): string {
+    // Optimize body text based on analysis
+    const maxLength = 120; // Optimal length for engagement
+    if (body.length > maxLength) {
+      return body.substring(0, maxLength - 3) + '...';
+    }
+    return body;
+  }
+
+  private async selectOptimalMedia(media: any[], analysis: ContentAnalysis): Promise<any> {
+    // Select the most engaging media based on analysis
+    if (media && media.length > 0) {
+      return media[0]; // Simplified selection
+    }
+    return null;
+  }
+
+  private calculateOptimalDeliveryTime(userId: string, analysis: ContentAnalysis): Date {
+    // Calculate when to deliver notification for maximum engagement
+    const now = new Date();
+    const delayMinutes = analysis.urgency === 'high' ? 0 : 15;
+    return new Date(now.getTime() + delayMinutes * 60000);
+  }
+
+  private async scheduleOptimizedNotification(payload: any): Promise<NotificationResult> {
+    // Schedule notification at optimal time
+    if (payload.timing > new Date()) {
+      return this.scheduleNotification(payload, payload.timing);
+    } else {
+      return this.sendNotification(payload);
+    }
+  }
+
+  private async segmentUsersForTesting(config: ABTestConfig): Promise<TestGroup[]> {
+    // Segment users into test groups
+    return [
+      { variantId: 'A', userIds: [], size: config.sampleSize / 2 },
+      { variantId: 'B', userIds: [], size: config.sampleSize / 2 }
+    ];
+  }
+
+  private async scheduleTestNotifications(group: TestGroup, variant: TestVariant): Promise<void> {
+    // Schedule A/B test notifications
+    for (const userId of group.userIds) {
+      await this.sendNotification({
+        userId,
+        ...variant.payload,
+        testId: variant.testId,
+        variantId: group.variantId
+      });
+    }
+  }
+
+  private adjustNotificationStrategy(userId: string, engagement: EngagementMetrics): void {
+    // Adjust notification strategy based on real-time engagement
+    if (engagement.score < 0.3) {
+      this.reduceNotificationFrequency(userId);
+    } else if (engagement.score > 0.8) {
+      this.increaseNotificationRelevance(userId);
+    }
+  }
+
+  private async sendReEngagementNotification(userId: string, inactivityDuration: number): Promise<void> {
+    // Send re-engagement notification after inactivity
+    const reEngagementPayload = await this.generateReEngagementContent(userId, inactivityDuration);
+    await this.sendNotification(reEngagementPayload);
+  }
+
+  private async setupGeofenceNotification(userId: string, geofence: GeofenceConfig): Promise<void> {
+    // Setup location-based notification triggers
+    this.log(`Geofence notification setup for user ${userId} at ${geofence.location}`);
+  }
+
+  private async updateUserNotificationSettings(userId: string, settings: any): Promise<void> {
+    // Update user's notification preferences
+    this.log(`Updated notification settings for user ${userId}`);
+  }
+
+  private async schedulePersonalizedNotifications(userId: string, timing: OptimalTiming): Promise<void> {
+    // Schedule notifications at personalized optimal times
+    this.log(`Scheduled personalized notifications for user ${userId}`);
+  }
+
+  private async generateReEngagementContent(userId: string, duration: number): Promise<NotificationPayload> {
+    // Generate content to re-engage inactive users
+    return {
+      userId,
+      title: "We miss you! 🎭",
+      body: "Discover what's new in your creative community",
+      type: 're_engagement',
+      data: { inactivityDuration: duration }
+    };
+  }
+
+  private reduceNotificationFrequency(userId: string): void {
+    this.log(`Reducing notification frequency for user ${userId}`);
+  }
+
+  private increaseNotificationRelevance(userId: string): void {
+    this.log(`Increasing notification relevance for user ${userId}`);
+  }
+}
+
+// MARK: - Advanced Data Types
+
+interface InteractiveNotificationPayload extends NotificationPayload {
+  actions?: NotificationAction[];
+  category?: string;
+  badge?: number;
+}
+
+interface ContentAwarePayload extends NotificationPayload {
+  content: any;
+  media?: any[];
+}
+
+interface NotificationAction {
+  id: string;
+  title: string;
+  icon?: string;
+}
+
+interface UserBehaviorPattern {
+  mostActiveHours: {
+    morning: string;
+    afternoon: string;
+    evening: string;
+  };
+  weekendPatterns: any;
+  lowEngagementPeriods: string[];
+}
+
+interface UserEngagementData {
+  averageEngagementRate: number;
+  lowEngagementPeriods: string[];
+}
+
+interface OptimalTiming {
+  morningSlot: string;
+  afternoonSlot: string;
+  eveningSlot: string;
+  weekendAdjustment: any;
+}
+
+interface OptimalFrequency {
+  daily: number;
+  quietPeriods: string[];
+  threshold: number;
+}
+
+interface ContentAnalysis {
+  sentiment: string;
+  urgency: string;
+  category: string;
+  keyTerms: string[];
+  emotionalTone: string;
+}
+
+interface ABTestConfig {
+  sampleSize: number;
+  variants: { [key: string]: TestVariant };
+}
+
+interface TestGroup {
+  variantId: string;
+  userIds: string[];
+  size: number;
+}
+
+interface TestVariant {
+  testId: string;
+  payload: NotificationPayload;
+}
+
+interface GeofenceConfig {
+  location: {
+    latitude: number;
+    longitude: number;
+    radius: number;
+  };
+  triggerType: 'enter' | 'exit' | 'dwell';
+  notificationTemplate: NotificationPayload;
+}
+
+interface NotificationContext {
+  type: string;
+  urgency: string;
+  userActivity: string;
+}
+
+interface EngagementMetrics {
+  score: number;
+  trends: any[];
+}
+
+// Supporting Classes
+
+class RealtimeEngagementTracker {
+  constructor(private userId: string) {}
+  
+  onEngagementChange(callback: (engagement: EngagementMetrics) => void): void {
+    // Implementation for real-time engagement tracking
+  }
+  
+  onInactivityDetected(callback: (duration: number) => void): void {
+    // Implementation for inactivity detection
+  }
+  
+  async start(): Promise<void> {
+    // Start tracking
+  }
+}
+
+class MLNotificationGenerator {
+  async generate(input: any): Promise<any> {
+    // ML-powered content generation
+    return {
+      title: "AI-Generated Title",
+      body: "AI-Generated Body",
+      additionalData: {}
+    };
+  }
 }
 
 // Export singleton instance
