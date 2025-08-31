@@ -99,14 +99,16 @@ ASYNC_REPOSITORY_REGISTRY = {
 
 # Repository Factory Functions
 def create_repository(repo_type: str, **kwargs):
-    """Create a repository instance with dependency injection"""    if repo_type not in REPOSITORY_REGISTRY:
+    """Create a repository instance with dependency injection"""
+    if repo_type not in REPOSITORY_REGISTRY:
         raise ValueError(f"Unknown repository type: {repo_type}")
     
     repository_class = REPOSITORY_REGISTRY[repo_type]
     return repository_class(**kwargs)
 
 def create_async_repository(repo_type: str, **kwargs):
-    """Create an async repository instance with dependency injection"""    if repo_type not in ASYNC_REPOSITORY_REGISTRY:
+    """Create an async repository instance with dependency injection"""
+    if repo_type not in ASYNC_REPOSITORY_REGISTRY:
         raise ValueError(f"Unknown async repository type: {repo_type}")
     
     repository_class = ASYNC_REPOSITORY_REGISTRY[repo_type]

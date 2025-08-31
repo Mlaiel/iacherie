@@ -167,10 +167,35 @@ class VideoFingerprintConfig:
     min_quality_score: float = 0.6
     blur_threshold: float = 100.0
     brightness_range: Tuple[float, float] = (0.1, 0.9)
+    
+    # Ultra-robust fingerprinting settings
+    compression_resistance_enabled: bool = True
+    multi_scale_hashing: bool = True
+    dct_hash_enabled: bool = True
+    block_based_hashing: bool = True
+    temporal_consistency_check: bool = True
+    
+    # Enhanced YOLO with face detection
+    face_detection_enabled: bool = True
+    real_time_optimization: bool = True
+    scene_analysis_enabled: bool = True
+    temporal_feature_extraction: bool = True
+    
+    # Watermark and crop resistance
+    watermark_resistance_enabled: bool = True
+    crop_resistance_enabled: bool = True
+    multi_region_hashing: bool = True
+    geometric_invariant_features: bool = True
+    robustness_metrics_enabled: bool = True
+    
+    # Advanced analysis parameters
+    spatial_frequency_analysis: bool = True
+    content_entropy_analysis: bool = True
+    attack_resistance_scoring: bool = True
 
 @dataclass
 class VideoFrame:
-    """Représentation d'une frame vidéo"""
+    """Représentation d'une frame vidéo avec caractéristiques ultra-robustes"""
     frame_number: int
     timestamp: float
     image_data: np.ndarray
@@ -179,14 +204,26 @@ class VideoFrame:
     motion_score: float = 0.0
     scene_id: Optional[int] = None
     
-    # Hash signatures
+    # Standard hash signatures
     phash: Optional[str] = None
     dhash: Optional[str] = None
     ahash: Optional[str] = None
     whash: Optional[str] = None
     
+    # Ultra-robust compression-resistant hashes
+    robust_hashes: Optional[Dict[str, Any]] = None
+    
     # Object detection results
     detected_objects: List[Dict[str, Any]] = field(default_factory=list)
+    enhanced_objects: List[Dict[str, Any]] = field(default_factory=list)
+    detected_faces: List[Dict[str, Any]] = field(default_factory=list)
+    
+    # Scene and temporal analysis
+    scene_analysis: Optional[Dict[str, Any]] = None
+    temporal_features: Optional[Dict[str, Any]] = None
+    
+    # Watermark and crop resistance features
+    resistance_features: Optional[Dict[str, Any]] = None
     
     # Deep features
     cnn_features: Optional[np.ndarray] = None
@@ -250,6 +287,22 @@ class VideoFingerprintEngine:
         self.motion_processor = MotionVectorProcessor(config)
         self.scene_detector = SceneDetector(config)
         self.deep_features_processor = DeepFeaturesProcessor(config)
+        
+        # Initialize ultra-robust processors
+        if config.compression_resistance_enabled:
+            self.compression_resistant_processor = CompressionResistantHashProcessor(config)
+        else:
+            self.compression_resistant_processor = None
+            
+        if config.face_detection_enabled:
+            self.enhanced_yolo_processor = EnhancedYOLOProcessor(config)
+        else:
+            self.enhanced_yolo_processor = None
+            
+        if config.watermark_resistance_enabled or config.crop_resistance_enabled:
+            self.watermark_crop_processor = WatermarkCropResistanceProcessor(config)
+        else:
+            self.watermark_crop_processor = None
         
         # GPU setup
         self.device = self._setup_device()
@@ -568,7 +621,7 @@ class VideoFingerprintEngine:
         return processed_frames
     
     async def _process_single_frame(self, frame_number: int, timestamp: float, image_data: np.ndarray) -> VideoFrame:
-        """Traite une frame individuelle"""
+        """Traite une frame individuelle avec analyse ultra-robuste"""
         # Create VideoFrame object
         video_frame = VideoFrame(
             frame_number=frame_number,
@@ -583,7 +636,7 @@ class VideoFingerprintEngine:
         if video_frame.quality_score < self.config.min_quality_score:
             return video_frame
         
-        # Generate perceptual hashes
+        # Standard perceptual hashes
         if IMAGEHASH_AVAILABLE:
             hashes = await self.phash_processor.generate_hashes(image_data)
             video_frame.phash = hashes.get('phash')
@@ -591,9 +644,27 @@ class VideoFingerprintEngine:
             video_frame.ahash = hashes.get('ahash')
             video_frame.whash = hashes.get('whash')
         
-        # Object detection
+        # Ultra-robust compression-resistant hashes
+        if self.compression_resistant_processor:
+            robust_hashes = await self.compression_resistant_processor.generate_robust_hashes(image_data)
+            video_frame.robust_hashes = robust_hashes
+        
+        # Standard object detection
         if self.yolo_processor and self.config.yolo_enabled:
             video_frame.detected_objects = await self.yolo_processor.detect_objects(image_data)
+        
+        # Enhanced YOLO with face detection and real-time analysis
+        if self.enhanced_yolo_processor:
+            enhanced_detection = await self.enhanced_yolo_processor.detect_objects_and_faces(image_data)
+            video_frame.enhanced_objects = enhanced_detection.get('objects', [])
+            video_frame.detected_faces = enhanced_detection.get('faces', [])
+            video_frame.scene_analysis = enhanced_detection.get('scene_analysis', {})
+            video_frame.temporal_features = enhanced_detection.get('temporal_features', {})
+        
+        # Watermark and crop resistance analysis
+        if self.watermark_crop_processor:
+            resistance_features = await self.watermark_crop_processor.analyze_resistance_features(image_data)
+            video_frame.resistance_features = resistance_features
         
         # Deep features extraction
         if self.config.deep_features_enabled:
@@ -1076,6 +1147,601 @@ class DeepFeaturesProcessor:
             logger.error(f"Error extracting deep features: {e}")
             return None
 
+class CompressionResistantHashProcessor:
+    """Processeur de hash perceptuel résistant à la compression ultra-robuste"""
+    
+    def __init__(self, config: VideoFingerprintConfig):
+        self.config = config
+        logger.info("CompressionResistantHashProcessor initialized")
+    
+    async def generate_robust_hashes(self, image_data: np.ndarray) -> Dict[str, Any]:
+        """Génère des hash résistants à la compression avec techniques avancées"""
+        if not IMAGEHASH_AVAILABLE:
+            return {}
+        
+        try:
+            # Convert to different color spaces for robustness
+            gray = cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
+            yuv = cv2.cvtColor(image_data, cv2.COLOR_BGR2YUV)
+            
+            # Multi-scale perceptual hashing
+            robust_hashes = {}
+            
+            # 1. DCT-based hash (compression resistant)
+            robust_hashes['dct_hash'] = self._generate_dct_hash(gray)
+            
+            # 2. Multi-scale perceptual hash
+            for scale in [0.5, 1.0, 1.5]:
+                scaled_img = self._scale_image(image_data, scale)
+                pil_image = Image.fromarray(cv2.cvtColor(scaled_img, cv2.COLOR_BGR2RGB))
+                
+                robust_hashes[f'phash_scale_{scale}'] = str(
+                    imagehash.phash(pil_image, hash_size=self.config.hash_size)
+                )
+            
+            # 3. Color-channel based hashing
+            for i, channel_name in enumerate(['Y', 'U', 'V']):
+                channel = yuv[:, :, i]
+                pil_channel = Image.fromarray(channel)
+                robust_hashes[f'channel_hash_{channel_name}'] = str(
+                    imagehash.phash(pil_channel, hash_size=self.config.hash_size)
+                )
+            
+            # 4. Block-based hashing for spatial robustness
+            robust_hashes['block_hashes'] = self._generate_block_hashes(gray)
+            
+            # 5. Temporal consistency hash (if previous frame available)
+            robust_hashes['temporal_consistency'] = self._calculate_temporal_hash(gray)
+            
+            return robust_hashes
+            
+        except Exception as e:
+            logger.error(f"Error generating robust hashes: {e}")
+            return {}
+    
+    def _generate_dct_hash(self, gray_image: np.ndarray, hash_size: int = 8) -> str:
+        """Génère un hash basé sur la DCT résistant à la compression"""
+        try:
+            # Resize to standard size
+            resized = cv2.resize(gray_image, (32, 32))
+            
+            # Apply DCT
+            dct = cv2.dct(np.float32(resized))
+            
+            # Keep low frequency components (top-left corner)
+            dct_low_freq = dct[0:hash_size, 0:hash_size]
+            
+            # Calculate median
+            median = np.median(dct_low_freq)
+            
+            # Generate binary hash
+            binary_hash = dct_low_freq > median
+            
+            # Convert to string
+            return ''.join(['1' if b else '0' for b in binary_hash.flatten()])
+            
+        except Exception as e:
+            logger.error(f"Error in DCT hash generation: {e}")
+            return ""
+    
+    def _scale_image(self, image: np.ndarray, scale: float) -> np.ndarray:
+        """Redimensionne l'image selon le facteur d'échelle"""
+        height, width = image.shape[:2]
+        new_height, new_width = int(height * scale), int(width * scale)
+        return cv2.resize(image, (new_width, new_height))
+    
+    def _generate_block_hashes(self, gray_image: np.ndarray, block_size: int = 64) -> List[str]:
+        """Génère des hash par blocs pour résister au recadrage"""
+        height, width = gray_image.shape
+        block_hashes = []
+        
+        for y in range(0, height - block_size, block_size // 2):
+            for x in range(0, width - block_size, block_size // 2):
+                block = gray_image[y:y+block_size, x:x+block_size]
+                if block.shape[0] == block_size and block.shape[1] == block_size:
+                    block_hash = self._generate_dct_hash(block, 8)
+                    block_hashes.append(block_hash)
+        
+        return block_hashes
+    
+    def _calculate_temporal_hash(self, current_frame: np.ndarray) -> Optional[str]:
+        """Calcule un hash temporel pour la cohérence entre frames"""
+        # Cette méthode serait étendue pour utiliser les frames précédentes
+        # Pour l'instant, retourne un hash simple
+        try:
+            # Simple temporal hash based on edge patterns
+            edges = cv2.Canny(current_frame, 50, 150)
+            edge_density = np.sum(edges > 0) / (edges.shape[0] * edges.shape[1])
+            
+            # Quantize edge density to create temporal signature
+            temporal_signature = int(edge_density * 255)
+            return f"temporal_{temporal_signature:02x}"
+            
+        except Exception:
+            return None
+
+class EnhancedYOLOProcessor:
+    """Processeur YOLO avancé avec détection de visages temps réel"""
+    
+    def __init__(self, config: VideoFingerprintConfig):
+        self.config = config
+        self.yolo_model = None
+        self.face_detector = None
+        
+        if YOLO_AVAILABLE:
+            self.yolo_model = YOLO(config.yolo_model)
+        
+        # Initialize face detection
+        self._initialize_face_detection()
+        
+        logger.info("EnhancedYOLOProcessor initialized with face detection")
+    
+    def _initialize_face_detection(self):
+        """Initialise la détection de visages avec OpenCV"""
+        try:
+            # Use OpenCV's pre-trained face detection
+            face_cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+            self.face_detector = cv2.CascadeClassifier(face_cascade_path)
+            logger.info("Face detection initialized successfully")
+        except Exception as e:
+            logger.warning(f"Face detection initialization failed: {e}")
+            self.face_detector = None
+    
+    async def detect_objects_and_faces(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Détection d'objets et de visages en temps réel"""
+        detection_results = {
+            'objects': [],
+            'faces': [],
+            'scene_analysis': {},
+            'temporal_features': {}
+        }
+        
+        try:
+            # YOLO object detection
+            if self.yolo_model:
+                object_detections = await self._detect_objects_yolo(frame)
+                detection_results['objects'] = object_detections
+            
+            # Face detection
+            if self.face_detector is not None:
+                face_detections = await self._detect_faces(frame)
+                detection_results['faces'] = face_detections
+            
+            # Scene analysis
+            detection_results['scene_analysis'] = await self._analyze_scene_content(frame)
+            
+            # Temporal features for consistency
+            detection_results['temporal_features'] = await self._extract_temporal_features(frame)
+            
+            return detection_results
+            
+        except Exception as e:
+            logger.error(f"Error in enhanced detection: {e}")
+            return detection_results
+    
+    async def _detect_objects_yolo(self, frame: np.ndarray) -> List[Dict[str, Any]]:
+        """Détection d'objets YOLO optimisée"""
+        objects = []
+        
+        try:
+            results = self.yolo_model(frame, 
+                                   conf=self.config.confidence_threshold,
+                                   iou=self.config.iou_threshold,
+                                   verbose=False)
+            
+            for result in results:
+                if result.boxes is not None:
+                    for box in result.boxes:
+                        obj_info = {
+                            'class': result.names[int(box.cls)],
+                            'confidence': float(box.conf),
+                            'bbox': box.xyxy.tolist()[0] if hasattr(box, 'xyxy') else [],
+                            'center': self._calculate_center(box.xyxy.tolist()[0]) if hasattr(box, 'xyxy') else [],
+                            'area': self._calculate_area(box.xyxy.tolist()[0]) if hasattr(box, 'xyxy') else 0
+                        }
+                        objects.append(obj_info)
+        
+        except Exception as e:
+            logger.error(f"YOLO detection error: {e}")
+        
+        return objects
+    
+    async def _detect_faces(self, frame: np.ndarray) -> List[Dict[str, Any]]:
+        """Détection de visages avec caractéristiques avancées"""
+        faces = []
+        
+        try:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            face_rects = self.face_detector.detectMultiScale(
+                gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
+            )
+            
+            for (x, y, w, h) in face_rects:
+                face_info = {
+                    'bbox': [x, y, x+w, y+h],
+                    'center': [x + w//2, y + h//2],
+                    'area': w * h,
+                    'confidence': 0.8,  # OpenCV doesn't provide confidence
+                    'face_features': await self._extract_face_features(gray[y:y+h, x:x+w])
+                }
+                faces.append(face_info)
+        
+        except Exception as e:
+            logger.error(f"Face detection error: {e}")
+        
+        return faces
+    
+    async def _extract_face_features(self, face_roi: np.ndarray) -> Dict[str, Any]:
+        """Extrait des caractéristiques du visage pour la robustesse"""
+        try:
+            features = {}
+            
+            # Basic geometric features
+            height, width = face_roi.shape
+            features['aspect_ratio'] = width / height if height > 0 else 0
+            
+            # Texture analysis
+            features['texture_variance'] = float(np.var(face_roi))
+            features['mean_intensity'] = float(np.mean(face_roi))
+            
+            # Edge density in face region
+            edges = cv2.Canny(face_roi, 50, 150)
+            features['edge_density'] = float(np.sum(edges > 0) / (height * width))
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Face feature extraction error: {e}")
+            return {}
+    
+    async def _analyze_scene_content(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Analyse du contenu de la scène pour la cohérence temporelle"""
+        try:
+            analysis = {}
+            
+            # Color distribution
+            hist_b = cv2.calcHist([frame], [0], None, [256], [0, 256])
+            hist_g = cv2.calcHist([frame], [1], None, [256], [0, 256])
+            hist_r = cv2.calcHist([frame], [2], None, [256], [0, 256])
+            
+            analysis['color_distribution'] = {
+                'dominant_colors': self._find_dominant_colors(frame),
+                'color_variance': float(np.var([hist_b, hist_g, hist_r]))
+            }
+            
+            # Scene complexity
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            edges = cv2.Canny(gray, 50, 150)
+            analysis['scene_complexity'] = float(np.sum(edges > 0) / (edges.shape[0] * edges.shape[1]))
+            
+            # Brightness and contrast
+            analysis['brightness'] = float(np.mean(gray))
+            analysis['contrast'] = float(np.std(gray))
+            
+            return analysis
+            
+        except Exception as e:
+            logger.error(f"Scene analysis error: {e}")
+            return {}
+    
+    async def _extract_temporal_features(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Extrait des caractéristiques temporelles pour la cohérence"""
+        try:
+            features = {}
+            
+            # Frame signature based on spatial distribution
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            
+            # Spatial frequency analysis
+            f_transform = np.fft.fft2(gray)
+            f_shift = np.fft.fftshift(f_transform)
+            magnitude = np.abs(f_shift)
+            
+            features['spatial_frequency_energy'] = float(np.mean(magnitude))
+            features['frequency_distribution'] = float(np.std(magnitude))
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Temporal feature extraction error: {e}")
+            return {}
+    
+    def _calculate_center(self, bbox: List[float]) -> List[float]:
+        """Calcule le centre d'une bbox"""
+        if len(bbox) >= 4:
+            return [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
+        return [0, 0]
+    
+    def _calculate_area(self, bbox: List[float]) -> float:
+        """Calcule l'aire d'une bbox"""
+        if len(bbox) >= 4:
+            return (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
+        return 0
+    
+    def _find_dominant_colors(self, image: np.ndarray, k: int = 3) -> List[List[int]]:
+        """Trouve les couleurs dominantes dans l'image"""
+        try:
+            # Reshape image to be a list of pixels
+            data = image.reshape((-1, 3))
+            data = np.float32(data)
+            
+            # Apply K-means clustering
+            criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0)
+            _, labels, centers = cv2.kmeans(data, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+            
+            # Convert centers to integers and return
+            centers = np.uint8(centers)
+            return centers.tolist()
+            
+        except Exception as e:
+            logger.error(f"Dominant color extraction error: {e}")
+            return []
+
+class WatermarkCropResistanceProcessor:
+    """Processeur de résistance aux watermarks et recadrages"""
+    
+    def __init__(self, config: VideoFingerprintConfig):
+        self.config = config
+        logger.info("WatermarkCropResistanceProcessor initialized")
+    
+    async def analyze_resistance_features(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Analyse les caractéristiques de résistance aux attaques"""
+        resistance_features = {
+            'multi_region_hashes': {},
+            'geometric_invariants': {},
+            'watermark_detection': {},
+            'robustness_metrics': {}
+        }
+        
+        try:
+            # 1. Multi-region hashing for crop resistance
+            resistance_features['multi_region_hashes'] = await self._generate_multi_region_hashes(frame)
+            
+            # 2. Geometric invariant features
+            resistance_features['geometric_invariants'] = await self._extract_geometric_invariants(frame)
+            
+            # 3. Watermark detection and analysis
+            resistance_features['watermark_detection'] = await self._detect_potential_watermarks(frame)
+            
+            # 4. Content robustness metrics
+            resistance_features['robustness_metrics'] = await self._calculate_robustness_metrics(frame)
+            
+            return resistance_features
+            
+        except Exception as e:
+            logger.error(f"Error in resistance analysis: {e}")
+            return resistance_features
+    
+    async def _generate_multi_region_hashes(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Génère des hash multi-régions pour résister au recadrage"""
+        try:
+            h, w = frame.shape[:2]
+            region_hashes = {}
+            
+            # Define multiple overlapping regions
+            regions = {
+                'center': (w//4, h//4, 3*w//4, 3*h//4),
+                'top_left': (0, 0, w//2, h//2),
+                'top_right': (w//2, 0, w, h//2),
+                'bottom_left': (0, h//2, w//2, h),
+                'bottom_right': (w//2, h//2, w, h),
+                'horizontal_center': (0, h//4, w, 3*h//4),
+                'vertical_center': (w//4, 0, 3*w//4, h)
+            }
+            
+            for region_name, (x1, y1, x2, y2) in regions.items():
+                region_frame = frame[y1:y2, x1:x2]
+                if region_frame.size > 0:
+                    region_hashes[region_name] = await self._hash_region(region_frame)
+            
+            # Generate overlapping grid hashes
+            grid_size = 4
+            grid_hashes = []
+            for i in range(grid_size):
+                for j in range(grid_size):
+                    x1 = (w * i) // grid_size
+                    y1 = (h * j) // grid_size
+                    x2 = (w * (i + 1)) // grid_size
+                    y2 = (h * (j + 1)) // grid_size
+                    
+                    grid_region = frame[y1:y2, x1:x2]
+                    if grid_region.size > 0:
+                        grid_hash = await self._hash_region(grid_region)
+                        grid_hashes.append(grid_hash)
+            
+            region_hashes['grid_hashes'] = grid_hashes
+            
+            return region_hashes
+            
+        except Exception as e:
+            logger.error(f"Multi-region hash error: {e}")
+            return {}
+    
+    async def _hash_region(self, region: np.ndarray) -> str:
+        """Génère un hash pour une région spécifique"""
+        try:
+            if IMAGEHASH_AVAILABLE:
+                # Convert to PIL Image
+                if len(region.shape) == 3:
+                    region_rgb = cv2.cvtColor(region, cv2.COLOR_BGR2RGB)
+                    pil_image = Image.fromarray(region_rgb)
+                else:
+                    pil_image = Image.fromarray(region)
+                
+                # Use perceptual hash
+                return str(imagehash.phash(pil_image, hash_size=8))
+            else:
+                # Fallback simple hash
+                return hashlib.md5(region.tobytes()).hexdigest()[:16]
+                
+        except Exception as e:
+            logger.error(f"Region hashing error: {e}")
+            return ""
+    
+    async def _extract_geometric_invariants(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Extrait des invariants géométriques résistants aux transformations"""
+        try:
+            invariants = {}
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            
+            # Detect keypoints and descriptors
+            sift = cv2.SIFT_create()
+            keypoints, descriptors = sift.detectAndCompute(gray, None)
+            
+            if descriptors is not None:
+                # Statistical moments of descriptors (rotation/scale invariant)
+                invariants['descriptor_moments'] = {
+                    'mean': float(np.mean(descriptors)),
+                    'std': float(np.std(descriptors)),
+                    'skewness': float(self._calculate_skewness(descriptors)),
+                    'kurtosis': float(self._calculate_kurtosis(descriptors))
+                }
+                
+                # Spatial distribution of keypoints
+                if keypoints:
+                    kp_coords = np.array([[kp.pt[0], kp.pt[1]] for kp in keypoints])
+                    invariants['keypoint_distribution'] = {
+                        'centroid': np.mean(kp_coords, axis=0).tolist(),
+                        'spread': float(np.std(kp_coords)),
+                        'count': len(keypoints)
+                    }
+            
+            # Hu moments (affine invariant)
+            moments = cv2.moments(gray)
+            hu_moments = cv2.HuMoments(moments)
+            invariants['hu_moments'] = [float(hu) for hu in hu_moments.flatten()]
+            
+            return invariants
+            
+        except Exception as e:
+            logger.error(f"Geometric invariant extraction error: {e}")
+            return {}
+    
+    async def _detect_potential_watermarks(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Détecte les watermarks potentiels"""
+        try:
+            detection_result = {
+                'watermark_probability': 0.0,
+                'suspected_regions': [],
+                'transparency_analysis': {},
+                'pattern_analysis': {}
+            }
+            
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            
+            # Look for semi-transparent regions (common in watermarks)
+            # Analyze alpha channel if available or detect transparency patterns
+            
+            # Edge detection to find overlay patterns
+            edges = cv2.Canny(gray, 50, 150)
+            
+            # Look for repeated patterns (watermark signatures)
+            # Use template matching or frequency analysis
+            
+            # Analyze corners and edges where watermarks are often placed
+            corner_regions = [
+                gray[0:gray.shape[0]//4, 0:gray.shape[1]//4],  # Top-left
+                gray[0:gray.shape[0]//4, -gray.shape[1]//4:],  # Top-right
+                gray[-gray.shape[0]//4:, 0:gray.shape[1]//4],  # Bottom-left
+                gray[-gray.shape[0]//4:, -gray.shape[1]//4:]   # Bottom-right
+            ]
+            
+            for i, corner in enumerate(corner_regions):
+                if corner.size > 0:
+                    # Analyze corner for watermark-like patterns
+                    corner_variance = np.var(corner)
+                    corner_edges = cv2.Canny(corner, 30, 100)
+                    edge_density = np.sum(corner_edges > 0) / corner.size
+                    
+                    if corner_variance < 500 and edge_density > 0.01:  # Potential watermark
+                        detection_result['suspected_regions'].append({
+                            'region': f'corner_{i}',
+                            'variance': float(corner_variance),
+                            'edge_density': float(edge_density)
+                        })
+            
+            # Calculate overall watermark probability
+            if detection_result['suspected_regions']:
+                detection_result['watermark_probability'] = min(
+                    len(detection_result['suspected_regions']) * 0.25, 1.0
+                )
+            
+            return detection_result
+            
+        except Exception as e:
+            logger.error(f"Watermark detection error: {e}")
+            return {}
+    
+    async def _calculate_robustness_metrics(self, frame: np.ndarray) -> Dict[str, Any]:
+        """Calcule les métriques de robustesse du contenu"""
+        try:
+            metrics = {}
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            
+            # Information density
+            # High information density = more robust to attacks
+            edges = cv2.Canny(gray, 50, 150)
+            metrics['information_density'] = float(np.sum(edges > 0) / edges.size)
+            
+            # Spatial frequency distribution
+            f_transform = np.fft.fft2(gray)
+            f_shift = np.fft.fftshift(f_transform)
+            magnitude_spectrum = np.abs(f_shift)
+            
+            # Energy distribution across frequencies
+            low_freq_energy = np.mean(magnitude_spectrum[
+                gray.shape[0]//2-10:gray.shape[0]//2+10,
+                gray.shape[1]//2-10:gray.shape[1]//2+10
+            ])
+            total_energy = np.mean(magnitude_spectrum)
+            
+            metrics['frequency_robustness'] = float(low_freq_energy / total_energy) if total_energy > 0 else 0
+            
+            # Content uniqueness (entropy)
+            hist, _ = np.histogram(gray.flatten(), bins=256, range=[0, 256])
+            hist = hist / hist.sum()  # Normalize
+            entropy = -np.sum(hist * np.log2(hist + 1e-10))
+            metrics['content_entropy'] = float(entropy)
+            
+            # Structural complexity
+            metrics['structural_complexity'] = float(np.std(gray)) / 255.0
+            
+            # Attack resistance score (composite metric)
+            metrics['attack_resistance_score'] = (
+                metrics['information_density'] * 0.3 +
+                metrics['frequency_robustness'] * 0.2 +
+                (metrics['content_entropy'] / 8.0) * 0.3 +  # Normalize entropy
+                metrics['structural_complexity'] * 0.2
+            )
+            
+            return metrics
+            
+        except Exception as e:
+            logger.error(f"Robustness metrics calculation error: {e}")
+            return {}
+    
+    def _calculate_skewness(self, data: np.ndarray) -> float:
+        """Calcule l'asymétrie des données"""
+        try:
+            mean = np.mean(data)
+            std = np.std(data)
+            if std == 0:
+                return 0
+            return np.mean(((data - mean) / std) ** 3)
+        except:
+            return 0
+    
+    def _calculate_kurtosis(self, data: np.ndarray) -> float:
+        """Calcule l'aplatissement des données"""
+        try:
+            mean = np.mean(data)
+            std = np.std(data)
+            if std == 0:
+                return 0
+            return np.mean(((data - mean) / std) ** 4) - 3
+        except:
+            return 0
+
 # Export public API
 __all__ = [
     'VideoFingerprintEngine',
@@ -1090,5 +1756,9 @@ __all__ = [
     'DeepFeaturesProcessor',
     'VideoQuality',
     'FrameExtractionMode',
-    'VideoCodec'
+    'VideoCodec',
+    # Ultra-robust processors
+    'CompressionResistantHashProcessor',
+    'EnhancedYOLOProcessor',
+    'WatermarkCropResistanceProcessor'
 ]
