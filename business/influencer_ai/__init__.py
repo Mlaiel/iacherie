@@ -245,6 +245,10 @@ def validate_business_logic() -> bool:
         
         logger.info("✅ Business logic validation passed")
         return True
+    
+    except Exception as e:
+        logger.error(f"❌ Business logic validation failed: {str(e)}")
+        return False
 
 # =============== MODULE EXPORTS ===============
 
@@ -269,6 +273,3 @@ __all__ = [
     "create_influencer_ai_ecosystem",
     "validate_business_logic"
 ]
-    except Exception as e:
-        logger.error(f"❌ Business logic validation failed: {e}")
-        return False
