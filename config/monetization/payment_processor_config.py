@@ -56,6 +56,8 @@ class PaymentMethod(str, Enum):
     SEPA = "sepa"  # Europe
     SWIFT = "swift"  # International
     PAYPAL_WALLET = "paypal_wallet"
+    VENMO = "venmo"  # PayPal's mobile payment service
+    BNPL = "bnpl"  # Buy Now Pay Later
     APPLE_PAY = "apple_pay"
     GOOGLE_PAY = "google_pay"
     SAMSUNG_PAY = "samsung_pay"
@@ -247,12 +249,13 @@ class PaymentProcessorConfig:
                 supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "BRL", "MXN", "INR"],
                 supported_methods=[
                     PaymentMethod.PAYPAL_WALLET, PaymentMethod.CREDIT_CARD,
-                    PaymentMethod.DEBIT_CARD, PaymentMethod.BANK_TRANSFER
+                    PaymentMethod.DEBIT_CARD, PaymentMethod.BANK_TRANSFER,
+                    PaymentMethod.VENMO, PaymentMethod.BNPL
                 ],
                 capabilities=[
                     ProcessorCapability.INSTANT_PAYOUTS, ProcessorCapability.MARKETPLACE_SPLITS,
                     ProcessorCapability.CURRENCY_CONVERSION, ProcessorCapability.MOBILE_PAYMENTS,
-                    ProcessorCapability.B2B_PAYMENTS
+                    ProcessorCapability.B2B_PAYMENTS, ProcessorCapability.SUBSCRIPTION_BILLING
                 ],
                 settlement_delay_days=1,
                 minimum_payout_amount=Decimal("1.00")
@@ -280,8 +283,8 @@ class PaymentProcessorConfig:
                         currency_conversion_fee=Decimal("0.35")
                     )
                 },
-                supported_countries=["US", "GB", "DE", "FR", "IT", "ES", "NL", "AU", "CA", "JP", "SG", "HK"],
-                supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "SGD", "HKD", "NZD"],
+                supported_countries=["US", "GB", "DE", "FR", "IT", "ES", "NL", "AU", "CA", "JP", "SG", "HK", "IN", "BR", "MX", "ZA", "NZ", "CH", "NO", "SE", "DK", "FI", "PL", "CZ", "HU", "RO", "BG", "HR", "SI", "SK", "LT", "LV", "EE"],
+                supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "SGD", "HKD", "NZD", "NOK", "SEK", "DKK", "PLN", "CZK", "HUF", "INR", "BRL", "MXN", "ZAR", "KRW", "THB", "MYR", "IDR", "PHP", "VND", "TRY", "BGN", "HRK", "RON", "RSD", "BAM", "MKD", "ALL", "ISK", "RUB", "UAH", "GEL", "AMD", "AZN", "KZT", "KGS", "TJS", "UZS", "TMT", "MDL", "BYN", "EGP", "MAD", "TND", "KES", "UGX", "TZS", "GHS", "NGN", "XOF", "XAF", "CNY", "TWD", "AED", "SAR", "QAR", "KWD", "BHD", "OMR", "JOD", "LBP", "ILS", "PKR", "BDT", "LKR", "NPR", "BTN", "MVR", "AFN", "IRR", "IQD", "SYP", "YER", "UYU", "PYG", "BOB", "PEN", "COP", "VEF", "CLP", "ARS"],
                 supported_methods=[
                     PaymentMethod.BANK_TRANSFER, PaymentMethod.SWIFT,
                     PaymentMethod.SEPA, PaymentMethod.ACH
@@ -294,6 +297,58 @@ class PaymentProcessorConfig:
                 minimum_payout_amount=Decimal("0.01")
             ),
             
+            PaymentProcessor.SQUARE: ProcessorConfig(
+                processor=PaymentProcessor.SQUARE,
+                display_name="Square",
+                api_key=os.getenv("SQUARE_APPLICATION_ID", ""),
+                secret_key=os.getenv("SQUARE_ACCESS_TOKEN", ""),
+                webhook_secret=os.getenv("SQUARE_WEBHOOK_SECRET", ""),
+                environment=os.getenv("SQUARE_ENV", "production"),
+                priority=4,
+                fee_structures={
+                    "USD": FeeStructure(
+                        percentage_fee=Decimal("2.6"),
+                        fixed_fee=Decimal("0.10"),
+                        currency="USD",
+                        international_fee=Decimal("0.5")
+                    ),
+                    "CAD": FeeStructure(
+                        percentage_fee=Decimal("2.65"),
+                        fixed_fee=Decimal("0.10"),
+                        currency="CAD",
+                        international_fee=Decimal("0.5")
+                    ),
+                    "GBP": FeeStructure(
+                        percentage_fee=Decimal("1.4"),
+                        fixed_fee=Decimal("0.20"),
+                        currency="GBP",
+                        international_fee=Decimal("0.5")
+                    ),
+                    "AUD": FeeStructure(
+                        percentage_fee=Decimal("1.9"),
+                        fixed_fee=Decimal("0.30"),
+                        currency="AUD",
+                        international_fee=Decimal("0.5")
+                    )
+                },
+                supported_countries=["US", "CA", "GB", "AU", "JP"],
+                supported_currencies=["USD", "CAD", "GBP", "AUD", "JPY"],
+                supported_methods=[
+                    PaymentMethod.CREDIT_CARD, PaymentMethod.DEBIT_CARD,
+                    PaymentMethod.DIGITAL_WALLET, PaymentMethod.APPLE_PAY,
+                    PaymentMethod.GOOGLE_PAY, PaymentMethod.ACH, PaymentMethod.BANK_TRANSFER
+                ],
+                capabilities=[
+                    ProcessorCapability.RECURRING_PAYMENTS, ProcessorCapability.INSTANT_PAYOUTS,
+                    ProcessorCapability.MARKETPLACE_SPLITS, ProcessorCapability.FRAUD_DETECTION,
+                    ProcessorCapability.MOBILE_PAYMENTS, ProcessorCapability.B2B_PAYMENTS,
+                    ProcessorCapability.SUBSCRIPTION_BILLING
+                ],
+                settlement_delay_days=1,
+                minimum_payout_amount=Decimal("1.00"),
+                webhook_events=["payment.updated", "refund.updated", "dispute.created"]
+            ),
+            
             PaymentProcessor.COINBASE: ProcessorConfig(
                 processor=PaymentProcessor.COINBASE,
                 display_name="Coinbase Commerce",
@@ -301,7 +356,7 @@ class PaymentProcessorConfig:
                 secret_key=os.getenv("COINBASE_API_SECRET", ""),
                 webhook_secret=os.getenv("COINBASE_WEBHOOK_SECRET", ""),
                 environment=os.getenv("COINBASE_ENV", "production"),
-                priority=4,
+                priority=5,
                 fee_structures={
                     "USD": FeeStructure(
                         percentage_fee=Decimal("1.0"),
@@ -416,6 +471,7 @@ class PaymentProvider(str, Enum):
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
+    SQUARE = "square"
     BANK_TRANSFER = "bank_transfer"
     CRYPTO = "crypto"
     APPLE_PAY = "apple_pay"
@@ -439,6 +495,11 @@ class PaymentMethod(str, Enum):
     SEPA_TRANSFER = "sepa_transfer"
     MOBILE_PAYMENT = "mobile_payment"
     VOUCHER = "voucher"
+    PAYPAL_WALLET = "paypal_wallet"
+    VENMO = "venmo"
+    BNPL = "bnpl"
+    APPLE_PAY = "apple_pay"
+    GOOGLE_PAY = "google_pay"
 
 
 class PaymentStatus(str, Enum):
@@ -581,10 +642,10 @@ class PaymentProcessorConfig:
                 webhook_secret="",
                 environment=os.getenv("WISE_ENVIRONMENT", "sandbox"),
                 supported_currencies=[
-                    "EUR", "USD", "GBP", "CAD", "AUD", "CHF", "JPY", "CNY"
+                    "EUR", "USD", "GBP", "CAD", "AUD", "CHF", "JPY", "CNY", "SGD", "HKD", "NZD", "NOK", "SEK", "DKK", "PLN", "CZK", "HUF", "INR", "BRL", "MXN", "ZAR", "KRW", "THB", "MYR", "IDR", "PHP", "VND", "TRY", "BGN", "HRK", "RON", "RSD", "BAM", "MKD", "ALL", "ISK", "RUB", "UAH", "GEL", "AMD", "AZN", "KZT", "KGS", "TJS", "UZS", "TMT", "MDL", "BYN", "EGP", "MAD", "TND", "KES", "UGX", "TZS", "GHS", "NGN", "XOF", "XAF", "TWD", "AED", "SAR", "QAR", "KWD", "BHD", "OMR", "JOD", "LBP", "ILS", "PKR", "BDT", "LKR", "NPR", "BTN", "MVR", "AFN", "IRR", "IQD", "SYP", "YER", "UYU", "PYG", "BOB", "PEN", "COP", "VEF", "CLP", "ARS"
                 ],
                 supported_countries=[
-                    "DE", "US", "GB", "FR", "IT", "ES", "CA", "AU", "NL", "BE", "CH"
+                    "DE", "US", "GB", "FR", "IT", "ES", "CA", "AU", "NL", "BE", "CH", "NO", "SE", "DK", "FI", "PL", "CZ", "HU", "RO", "BG", "HR", "SI", "SK", "LT", "LV", "EE", "IN", "BR", "MX", "ZA", "NZ", "SG", "HK", "JP", "CN", "KR", "TH", "MY", "ID", "PH", "VN", "TR", "UA", "GE", "AM", "AZ", "KZ", "KG", "TJ", "UZ", "TM", "MD", "BY", "EG", "MA", "TN", "KE", "UG", "TZ", "GH", "NG", "AE", "SA", "QA", "KW", "BH", "OM", "JO", "LB", "IL", "PK", "BD", "LK", "NP", "BT", "MV", "AF", "IR", "IQ", "SY", "YE", "UY", "PY", "BO", "PE", "CO", "VE", "CL", "AR"
                 ],
                 processing_fee_percentage=Decimal("0.5"),
                 processing_fee_fixed=Decimal("0.50"),
@@ -625,12 +686,38 @@ class PaymentProcessorConfig:
                 supports_subscriptions=True,
                 supports_marketplace=True,
                 priority=4
+            ),
+            PaymentProvider.SQUARE: PaymentProviderConfig(
+                provider=PaymentProvider.SQUARE,
+                enabled=True,
+                api_key=os.getenv("SQUARE_APPLICATION_ID", ""),
+                api_secret=os.getenv("SQUARE_ACCESS_TOKEN", ""),
+                webhook_secret=os.getenv("SQUARE_WEBHOOK_SECRET", ""),
+                environment=os.getenv("SQUARE_ENVIRONMENT", "sandbox"),
+                supported_currencies=[
+                    "USD", "CAD", "GBP", "AUD", "JPY"
+                ],
+                supported_countries=[
+                    "US", "CA", "GB", "AU", "JP"
+                ],
+                processing_fee_percentage=Decimal("2.6"),
+                processing_fee_fixed=Decimal("0.10"),
+                payout_fee_percentage=Decimal("0.0"),
+                payout_fee_fixed=Decimal("0.25"),
+                minimum_amount=Decimal("1.00"),
+                maximum_amount=Decimal("50000.00"),
+                settlement_time_hours=24,
+                supports_refunds=True,
+                supports_disputes=True,
+                supports_subscriptions=True,
+                supports_marketplace=True,
+                priority=5
             )
         }
     )
     
     # Security Configuration
-    SECURITY_CONFIG: PaymentSecurityConfig = PaymentSecurityConfig()
+    SECURITY_CONFIG: PaymentSecurityConfig = field(default_factory=PaymentSecurityConfig)
     
     # Supported Payment Methods by Provider
     PROVIDER_PAYMENT_METHODS: Dict[PaymentProvider, List[PaymentMethod]] = field(
@@ -641,10 +728,15 @@ class PaymentProcessorConfig:
                 PaymentMethod.BANK_ACCOUNT,
                 PaymentMethod.DIGITAL_WALLET,
                 PaymentMethod.ACH_TRANSFER,
-                PaymentMethod.SEPA_TRANSFER
+                PaymentMethod.SEPA_TRANSFER,
+                PaymentMethod.APPLE_PAY,
+                PaymentMethod.GOOGLE_PAY
             ],
             PaymentProvider.PAYPAL: [
                 PaymentMethod.DIGITAL_WALLET,
+                PaymentMethod.PAYPAL_WALLET,
+                PaymentMethod.VENMO,
+                PaymentMethod.BNPL,
                 PaymentMethod.CREDIT_CARD,
                 PaymentMethod.DEBIT_CARD,
                 PaymentMethod.BANK_ACCOUNT
@@ -654,6 +746,16 @@ class PaymentProcessorConfig:
                 PaymentMethod.WIRE_TRANSFER,
                 PaymentMethod.ACH_TRANSFER,
                 PaymentMethod.SEPA_TRANSFER
+            ],
+            PaymentProvider.SQUARE: [
+                PaymentMethod.CREDIT_CARD,
+                PaymentMethod.DEBIT_CARD,
+                PaymentMethod.DIGITAL_WALLET,
+                PaymentMethod.APPLE_PAY,
+                PaymentMethod.GOOGLE_PAY,
+                PaymentMethod.ACH_TRANSFER,
+                PaymentMethod.BANK_ACCOUNT,
+                PaymentMethod.MOBILE_PAYMENT
             ],
             PaymentProvider.ADYEN: [
                 PaymentMethod.CREDIT_CARD,

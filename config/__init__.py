@@ -107,15 +107,18 @@ class ConfigurationManagerProtocol(ABC):
     """Protocol interface pour tous les gestionnaires de configuration"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du manager"""        pass
+        """Initialisation du manager"""
+        pass
     
     @abstractmethod
     async def validate_configuration(self) -> Dict[str, Any]:
-        """Validation de la configuration"""        pass
+        """Validation de la configuration"""
+        pass
     
     @abstractmethod
     async def get_configuration(self) -> Dict[str, Any]:
-        """Récupération de la configuration"""        pass
+        """Récupération de la configuration"""
+        pass
 
 class ConfigurationRegistry:
     """Registry central pour toutes les configurations"""    
@@ -126,7 +129,8 @@ class ConfigurationRegistry:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def register_manager(self, name: str, manager: ConfigurationManagerProtocol) -> None:
-        """Enregistrement d'un manager de configuration"""        try:
+        """Enregistrement d'un manager de configuration"""
+        try:
             await manager.initialize()
             self.managers[name] = manager
             self.logger.info(f"✅ Manager '{name}' enregistré avec succès")
@@ -135,10 +139,12 @@ class ConfigurationRegistry:
             raise
     
     async def get_manager(self, name: str) -> Optional[ConfigurationManagerProtocol]:
-        """Récupération d'un manager spécifique"""        return self.managers.get(name)
+        """Récupération d'un manager spécifique"""
+        return self.managers.get(name)
     
     async def get_all_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Récupération de toutes les configurations"""        configurations = {}
+        """Récupération de toutes les configurations"""
+        configurations = {}
         for name, manager in self.managers.items():
             try:
                 configurations[name] = await manager.get_configuration()
@@ -148,7 +154,8 @@ class ConfigurationRegistry:
         return configurations
     
     async def validate_all_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Validation de toutes les configurations"""        validations = {}
+        """Validation de toutes les configurations"""
+        validations = {}
         for name, manager in self.managers.items():
             try:
                 validations[name] = await manager.validate_configuration()
@@ -166,7 +173,8 @@ class MasterConfigurationManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize_all_managers(self) -> bool:
-        """Initialisation complète de tous les managers"""        try:
+        """Initialisation complète de tous les managers"""        
+        try:
             self.logger.info("🚀 Initialisation des gestionnaires de configuration...")
             
             # Environment managers
@@ -199,7 +207,8 @@ class MasterConfigurationManager:
             return False
     
     async def _initialize_environment_managers(self) -> None:
-        """Initialisation des gestionnaires d'environnement"""        environment = os.getenv('ENVIRONMENT', 'development')
+        """Initialisation des gestionnaires d'environnement"""        
+        environment = os.getenv('ENVIRONMENT', 'development')
         
         if environment == 'production':
             await self.registry.register_manager('environment', ProductionConfigManager())
@@ -211,43 +220,50 @@ class MasterConfigurationManager:
             await self.registry.register_manager('environment', DevelopmentConfigManager())
     
     async def _initialize_security_managers(self) -> None:
-        """Initialisation des gestionnaires de sécurité"""        await self.registry.register_manager('security', SecurityConfigManager())
+        """Initialisation des gestionnaires de sécurité"""        
+        await self.registry.register_manager('security', SecurityConfigManager())
         await self.registry.register_manager('encryption', EncryptionConfigManager())
         await self.registry.register_manager('authentication', AuthenticationConfigManager())
         await self.registry.register_manager('authorization', AuthorizationConfigManager())
     
     async def _initialize_database_managers(self) -> None:
-        """Initialisation des gestionnaires de base de données"""        await self.registry.register_manager('database', DatabaseConfigManager())
+        """Initialisation des gestionnaires de base de données"""        
+        await self.registry.register_manager('database', DatabaseConfigManager())
         await self.registry.register_manager('cache', CacheConfigManager())
         await self.registry.register_manager('vector_db', VectorDatabaseConfigManager())
         await self.registry.register_manager('search', SearchConfigManager())
     
     async def _initialize_integration_managers(self) -> None:
-        """Initialisation des gestionnaires d'intégration"""        await self.registry.register_manager('spotify', SpotifyConfigManager())
+        """Initialisation des gestionnaires d'intégration"""        
+        await self.registry.register_manager('spotify', SpotifyConfigManager())
         await self.registry.register_manager('social_platforms', SocialPlatformsConfigManager())
         await self.registry.register_manager('payment_gateways', PaymentGatewaysConfigManager())
         await self.registry.register_manager('cloud_storage', CloudStorageConfigManager())
     
     async def _initialize_ai_managers(self) -> None:
-        """Initialisation des gestionnaires IA"""        await self.registry.register_manager('machine_learning', MachineLearningConfigManager())
+        """Initialisation des gestionnaires IA"""        
+        await self.registry.register_manager('machine_learning', MachineLearningConfigManager())
         await self.registry.register_manager('fingerprinting', FingerprintingConfigManager())
         await self.registry.register_manager('audio_processing', AudioProcessingConfigManager())
         await self.registry.register_manager('content_analysis', ContentAnalysisConfigManager())
     
     async def _initialize_infrastructure_managers(self) -> None:
-        """Initialisation des gestionnaires d'infrastructure"""        await self.registry.register_manager('kubernetes', KubernetesConfigManager())
+        """Initialisation des gestionnaires d'infrastructure"""        
+        await self.registry.register_manager('kubernetes', KubernetesConfigManager())
         await self.registry.register_manager('monitoring', MonitoringConfigManager())
         await self.registry.register_manager('logging', LoggingConfigManager())
         await self.registry.register_manager('networking', NetworkingConfigManager())
     
     async def _initialize_business_managers(self) -> None:
-        """Initialisation des gestionnaires métier"""        await self.registry.register_manager('monetization', MonetizationConfigManager())
+        """Initialisation des gestionnaires métier"""        
+        await self.registry.register_manager('monetization', MonetizationConfigManager())
         await self.registry.register_manager('licensing', LicensingConfigManager())
         await self.registry.register_manager('analytics', AnalyticsConfigManager())
         await self.registry.register_manager('notifications', NotificationConfigManager())
     
     async def get_complete_configuration(self) -> Dict[str, Any]:
-        """Configuration complète du système"""        if not self.initialized:
+        """Configuration complète du système"""        
+        if not self.initialized:
             await self.initialize_all_managers()
         
         return {
