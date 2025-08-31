@@ -14,7 +14,8 @@ COPYRIGHT WARNING: This code is proprietary. Unauthorized use, copying, or
 redistribution without explicit written permission from Fahed Mlaiel is 
 strictly prohibited and will result in legal action.
 ================================================================================
-"""__version__ = "2.0.0"
+"""
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."

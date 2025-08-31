@@ -82,6 +82,27 @@ class CollaborationRevenue:
     payment_methods: Dict[str, str]
     tax_implications: Dict[str, Any]
 
+@dataclass
+class MonetizationJob:
+    """Monetization processing job"""
+    job_id: str
+    operation_type: str
+    content_id: str
+    creator_id: str
+    parameters: Dict[str, Any] = field(default_factory=dict)
+    status: str = "pending"
+    created_at: datetime = field(default_factory=datetime.now)
+
+@dataclass
+class MonetizationResult:
+    """Result of monetization operation"""
+    job_id: str
+    success: bool
+    data: Dict[str, Any] = field(default_factory=dict)
+    error: Optional[str] = None
+    processing_time: float = 0.0
+    completed_at: datetime = field(default_factory=datetime.now)
+
 class MonetizationEngine:
     """
     Ultra-Advanced Monetization Processing Engine
