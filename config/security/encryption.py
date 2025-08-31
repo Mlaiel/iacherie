@@ -1,9 +1,9 @@
-"""Encryption Configuration Module
-===============================
-
-Advanced encryption configuration for IA Influencer Agent platform.
-Provides comprehensive data encryption, key management, and cryptographic
-security configurations for content protection and data security.
+"""Enhanced Security Configuration for Data Protection
+Updated to support the four data protection requirements:
+1. AES-256 encryption repos
+2. TLS 1.3 encryption transit
+3. End-to-end encryption communications
+4. Key management HSM
 
 Business Logic Integration:
 - Content file encryption before upload processing
@@ -28,17 +28,36 @@ from pathlib import Path
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
-    AES_256_GCM = "aes-256-gcm"
-    AES_256_CBC = "aes-256-cbc"
+    """Supported encryption algorithms - Enhanced for data protection requirements."""
+    # Required for Repository Encryption (Requirement 1)
+    AES_256_GCM = "aes-256-gcm"  # Primary algorithm for repos
+    AES_256_CBC = "aes-256-cbc"  # Alternative for repos
+    
+    # For End-to-End Communications (Requirement 3)
     ChaCha20_Poly1305 = "chacha20-poly1305"
-    RSA_4096 = "rsa-4096"
+    RSA_4096 = "rsa-4096"  # Required for E2E key exchange
+    
+    # Digital signatures and key exchange
     ECDSA_P256 = "ecdsa-p256"
     ECDH_P256 = "ecdh-p256"
 
 
+class TransitSecurityLevel(Enum):
+    """Transit security levels for TLS requirements"""
+    TLS_1_2 = "tls-1.2"
+    TLS_1_3 = "tls-1.3"  # Required for Requirement 2
+    TLS_1_3_STRICT = "tls-1.3-strict"
+
+
+class HSMComplianceLevel(Enum):
+    """HSM compliance levels for key management"""
+    FIPS_140_2_LEVEL_2 = "fips-140-2-level-2"
+    FIPS_140_2_LEVEL_3 = "fips-140-2-level-3"
+    FIPS_140_2_LEVEL_4 = "fips-140-2-level-4"  # Required for Requirement 4
+
+
 class KeyType(Enum):
-    """Encryption key types."""
+    """Encryption key types with data protection categories."""
     MASTER_KEY = "master"
     DATA_KEY = "data"
     CONTENT_KEY = "content"
@@ -46,6 +65,41 @@ class KeyType(Enum):
     SESSION_KEY = "session"
     FINGERPRINT_KEY = "fingerprint"
     REVENUE_KEY = "revenue"
+    # New for data protection requirements
+    REPOSITORY_KEY = "repository"  # For repo encryption
+    TRANSIT_KEY = "transit"        # For TLS/transit
+    E2E_KEY = "e2e"               # For end-to-end
+    HSM_KEY = "hsm"               # For HSM management
+
+
+@dataclass
+class DataProtectionEncryptionConfig:
+    """Enhanced encryption configuration for data protection requirements"""
+    
+    # Requirement 1: AES-256 encryption repos
+    repository_encryption_enabled: bool = True
+    repository_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
+    repository_key_size: int = 256
+    
+    # Requirement 2: TLS 1.3 encryption transit
+    transit_encryption_enabled: bool = True
+    min_tls_version: TransitSecurityLevel = TransitSecurityLevel.TLS_1_3
+    perfect_forward_secrecy: bool = True
+    
+    # Requirement 3: End-to-end encryption communications  
+    e2e_encryption_enabled: bool = True
+    e2e_asymmetric_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.RSA_4096
+    e2e_symmetric_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
+    
+    # Requirement 4: Key management HSM
+    hsm_enabled: bool = True
+    hsm_compliance_level: HSMComplianceLevel = HSMComplianceLevel.FIPS_140_2_LEVEL_4
+    hsm_tamper_resistance: bool = True
+    
+    # Additional security settings
+    key_rotation_enabled: bool = True
+    key_rotation_interval_days: int = 90
+    audit_logging_enabled: bool = True
 
 
 class KeyDerivationFunction(Enum):
