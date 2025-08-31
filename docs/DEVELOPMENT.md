@@ -115,9 +115,11 @@ Ce code et ce concept sont la propriété intellectuelle exclusive de **Fahed Ml
 - **Plateformes Vidéo:** Vimeo, Dailymotion, Twitch
 
 ### Crawlers Spécialisés (82 crawlers)
-- **E-commerce:** Amazon, eBay, Etsy
-- **Éducatif:** Coursera, Udemy, Khan Academy
-- **Blogs & Forums:** Medium, Reddit, WordPress
+- **E-commerce:** Amazon, eBay, Etsy - Monitoring produits dérivés
+- **Éducatif:** Coursera, Udemy, Khan Academy, edX - Contenu pédagogique
+- **Blogs & Forums:** Medium, Reddit, WordPress - Discussions et mentions
+- **Sites News:** CNN, BBC, Reuters, AP News, Guardian - Monitoring actualités
+- **Plateformes Podcast:** Spotify Podcasts, Apple Podcasts, Google Podcasts - Audio content tracking
 
 ## 💰 Systèmes de Paiement
 

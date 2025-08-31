@@ -68,6 +68,10 @@ from .onlyfans_crawler import OnlyFansCrawler
 
 # Generic & Specialized
 from .generic_crawler import GenericWebCrawler
+from .ecommerce_crawler import EcommerceCrawler
+from .educational_crawler import EducationalCrawler  
+from .news_crawler import NewsCrawler
+from .podcast_crawler import PodcastCrawler
 
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
@@ -121,6 +125,12 @@ __all__ = [
     
     # Generic
     "GenericWebCrawler",
+    
+    # Specialized Crawlers  
+    "EcommerceCrawler",
+    "EducationalCrawler",
+    "NewsCrawler", 
+    "PodcastCrawler",
 ]
 
 # Platform categorization for easy access
@@ -147,6 +157,10 @@ VIDEO_CRAWLERS = [
 
 CONTENT_CRAWLERS = [
     "SubstackCrawler", "MediumCrawler", "PatreonCrawler", "OnlyFansCrawler"
+]
+
+SPECIALIZED_CRAWLERS = [
+    "EcommerceCrawler", "EducationalCrawler", "NewsCrawler", "PodcastCrawler"
 ]
 
 # Platform configurations and metadata
