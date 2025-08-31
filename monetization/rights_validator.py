@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 class RightType(Enum):
-    """Types of content rights"""    COPYRIGHT = "copyright"
+    """Types of content rights"""
+    COPYRIGHT = "copyright"
     LICENSING = "licensing"
     DISTRIBUTION = "distribution"
     COMMERCIAL = "commercial"
@@ -33,7 +34,8 @@ class RightType(Enum):
 
 
 class RightStatus(Enum):
-    """Status of rights"""    VALID = "valid"
+    """Status of rights"""
+    VALID = "valid"
     INVALID = "invalid"
     EXPIRED = "expired"
     PENDING = "pending"
@@ -42,7 +44,8 @@ class RightStatus(Enum):
 
 
 class ValidationResult(Enum):
-    """Results of rights validation"""    APPROVED = "approved"
+    """Results of rights validation"""
+    APPROVED = "approved"
     REJECTED = "rejected"
     REQUIRES_REVIEW = "requires_review"
     INSUFFICIENT_RIGHTS = "insufficient_rights"
@@ -51,7 +54,8 @@ class ValidationResult(Enum):
 
 @dataclass
 class ContentRight:
-    """Individual content right"""    right_id: str
+    """Individual content right"""
+    right_id: str
     content_id: int
     owner_id: int
     right_type: RightType
@@ -68,7 +72,8 @@ class ContentRight:
 
 @dataclass
 class RightsChain:
-    """Chain of rights for content"""    content_id: int
+    """Chain of rights for content"""
+    content_id: int
     original_owner: int
     current_owner: int
     rights_history: List[ContentRight]
