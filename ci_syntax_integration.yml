@@ -1,0 +1,29 @@
+
+# Syntax validation step for CI/CD
+- name: 🔍 Python Syntax Validation
+  run: |
+    python scripts/fix_syntax_errors.py --audit --report
+    if [ -f syntax_audit_report.md ]; then
+      echo "Syntax issues found. See artifact for details."
+      exit 1
+    fi
+
+- name: 📄 Upload syntax audit report
+  uses: actions/upload-artifact@v3
+  if: failure()
+  with:
+    name: syntax-audit-report
+    path: syntax_audit_report.md
+
+- name: 🎯 PEP257 Docstring Validation
+  run: |
+    python -c "
+from scripts.pep257_standardizer import PEP257DocstringStandardizer
+from pathlib import Path
+standardizer = PEP257DocstringStandardizer(Path('.'))
+audit_results = standardizer.audit_repository()
+if audit_results['compliance_rate'] < 90:
+    print(f'Docstring compliance: {audit_results["compliance_rate"]:.1f}% (target: 90%)')
+    exit(1)
+print(f'Docstring compliance: {audit_results["compliance_rate"]:.1f}% ✅')
+"

@@ -41,6 +41,11 @@ jobs:
     - name: Code formatting check (Black)
       run: black --check --diff .
 
+    - name: 🔍 Python Syntax Validation
+      run: |
+        python scripts/pep257_standardizer.py --audit-syntax
+        echo "Syntax validation completed"
+
     - name: Linting (Flake8)
       run: flake8 --max-line-length=120 --extend-ignore=E203,W503 .
 

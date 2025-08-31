@@ -14,5 +14,5 @@ __all__ = [
     "CollaborationEngine",
     "RemixGenerator", 
     "GamificationSystem",
-    "RecommendationEngine"
+    """RecommendationEngine"""
 ]
