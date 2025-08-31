@@ -90,12 +90,32 @@ business/engagement/
 - **Suivi de Séries**: Récompenses de cohérence quotidienne/hebdomadaire/mensuelle
 - **Personnalisation Profil**: Badges, animations et personnalisation
 
-### 🏆 Système de Défis
-- **Défis Créatifs**: Création de contenu 30 jours, transfert de style, batailles remix
-- **Défis Techniques**: Maîtrise SEO, optimisation revenus, quêtes qualité
+### 🏆 Système de Défis Spécialisés
+- **Défis Créatifs Mensuels**: Challenges créatifs 30 jours avec prix en cash (500$+ grand prix)
+- **Défis Techniques SEO**: Amélioration ranking 25-30% avec outils avancés débloqués
+- **Défis Optimisation Revenus**: Augmentation revenus 50% avec multiplicateurs récompenses
+- **Compétitions Globales**: Événements spéciaux avec prix pools 25-50K$ et portée mondiale
 - **Défis Collaboratifs**: Courses partenariat, compétitions portée mondiale
 - **Événements Saisonniers**: Défis temps limité avec récompenses exclusives
 - **Auto-Générés**: Création de défis par IA basée sur les modèles utilisateur
+
+#### 🎨 Défis Créatifs Mensuels
+- **Prix en Cash**: Grand prix 500$, 2ème place 200$, 3ème place 100$
+- **Vote Communautaire**: Système de vote intégré avec pondération expert
+- **Contraintes Créatives**: Exigences d'innovation et utilisation outils IA
+- **Récompenses Participation**: Points et badges pour tous les participants
+
+#### 🔍 Défis Techniques
+- **SEO Mastery**: Cibles amélioration ranking 30%, trafic organique +45%
+- **Revenue Boost**: Objectifs croissance 50%, nouveaux flux revenus
+- **Suivi Automatisé**: Tracking temps réel avec vérification tiers
+- **Récompenses Techniques**: Déblocage outils premium, multiplicateurs revenus
+
+#### 🌍 Compétitions Globales
+- **Prize Pools Massifs**: 25-50K$ par compétition saisonnière
+- **Portée Mondiale**: 7 régions, support 10 langues
+- **Événements Spéciaux**: Célébrations milestones, compétitions anniversaire
+- **Streaming Live**: Tableaux de bord temps réel, diffusion événements
 
 ### 💰 Économie Virtuelle
 - **Système Multi-Devises**: Crédits, Gemmes, Jetons, Points d'Influence, Cristaux Qualité
