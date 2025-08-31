@@ -46,6 +46,12 @@ class RTLLanguage(Enum):
     SINDHI = "sd"
     UYGHUR = "ug"
     YIDDISH = "yi"
+    # Enhanced Amazigh/Berber support
+    AMAZIGH = "ber"
+    TAMAZIGHT = "tzm"
+    TARIFIT = "rif"
+    TASHELHIT = "shi"
+    KABYLE = "kab"
 
 
 class BiDiType(Enum):
@@ -204,6 +210,66 @@ class RTLLanguageSupport:
             mixed_content_strategy="neutral_follows_preceding"
         )
         
+        # Enhanced Amazigh/Berber support
+        self.rtl_languages["ber"] = RTLProcessor(
+            language=RTLLanguage.AMAZIGH,
+            script_direction=TextDirection.RTL,  # Tifinagh is traditionally RTL
+            number_format="amazigh",
+            date_format="amazigh_traditional",
+            calendar_type="berber_agricultural",
+            sorting_rules=["tifinagh_collation", "latin_fallback"],
+            punctuation_handling="tifinagh_style",
+            mixed_content_strategy="script_aware_mixed"
+        )
+        
+        # Tamazight (Central Atlas)
+        self.rtl_languages["tzm"] = RTLProcessor(
+            language=RTLLanguage.TAMAZIGHT,
+            script_direction=TextDirection.RTL,
+            number_format="tamazight",
+            date_format="berber_solar",
+            calendar_type="berber_traditional",
+            sorting_rules=["tamazight_collation"],
+            punctuation_handling="mixed_latin_tifinagh",
+            mixed_content_strategy="preserve_script_direction"
+        )
+        
+        # Tarifit (Rif Berber)
+        self.rtl_languages["rif"] = RTLProcessor(
+            language=RTLLanguage.TARIFIT,
+            script_direction=TextDirection.RTL,
+            number_format="tarifit",
+            date_format="rif_traditional",
+            calendar_type="agricultural_seasons",
+            sorting_rules=["tarifit_collation"],
+            punctuation_handling="rif_style",
+            mixed_content_strategy="contextual_script_aware"
+        )
+        
+        # Tashelhit (Souss Berber)
+        self.rtl_languages["shi"] = RTLProcessor(
+            language=RTLLanguage.TASHELHIT,
+            script_direction=TextDirection.RTL,
+            number_format="tashelhit",
+            date_format="souss_traditional",
+            calendar_type="agricultural_berber",
+            sorting_rules=["tashelhit_collation"],
+            punctuation_handling="souss_style",
+            mixed_content_strategy="trilingual_aware"  # Arabic, French, Berber
+        )
+        
+        # Kabyle (Algerian Berber)
+        self.rtl_languages["kab"] = RTLProcessor(
+            language=RTLLanguage.KABYLE,
+            script_direction=TextDirection.RTL,
+            number_format="kabyle",
+            date_format="kabyle_traditional",
+            calendar_type="kabyle_seasonal",
+            sorting_rules=["kabyle_collation"],
+            punctuation_handling="kabyle_style",
+            mixed_content_strategy="french_arabic_berber_aware"
+        )
+        
         logger.info(f"Initialized {len(self.rtl_languages)} RTL language processors")
     
     def _initialize_unicode_ranges(self):
@@ -219,6 +285,10 @@ class RTLLanguageSupport:
             # Hebrew script
             "hebrew": (0x0590, 0x05FF),
             "hebrew_presentation": (0xFB1D, 0xFB4F),
+            
+            # Tifinagh script (Amazigh/Berber)
+            "tifinagh": (0x2D30, 0x2D7F),
+            "tifinagh_extended": (0x2D80, 0x2DDF),
             
             # Other RTL scripts
             "syriac": (0x0700, 0x074F),
@@ -237,6 +307,8 @@ class RTLLanguageSupport:
             **{chr(i): BiDiType.L for i in range(0x61, 0x7B)},  # a-z
             **{chr(i): BiDiType.R for i in range(0x0590, 0x05FF)},  # Hebrew
             **{chr(i): BiDiType.AL for i in range(0x0600, 0x06FF)},  # Arabic
+            **{chr(i): BiDiType.R for i in range(0x2D30, 0x2D7F)},  # Tifinagh
+            **{chr(i): BiDiType.R for i in range(0x2D80, 0x2DDF)},  # Tifinagh Extended
             
             # Numbers
             **{chr(i): BiDiType.EN for i in range(0x30, 0x3A)},  # 0-9
