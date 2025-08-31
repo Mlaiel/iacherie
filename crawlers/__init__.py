@@ -38,6 +38,13 @@ from .platforms import (
     GenericCrawler
 )
 
+# Import specialized crawlers
+from .ecommerce_crawler import EcommerceCrawler
+from .educational_crawler import EducationalCrawler
+from .blog_forum_crawler import BlogForumCrawler
+from .news_crawler import NewsCrawler
+from .podcast_crawler import PodcastCrawler
+
 # Import utility modules
 from .utils import (
     RateLimiter, ProxyManager, UserAgentRotator,
@@ -125,7 +132,12 @@ class CrawlerOrchestrator:
             'twitter': TwitterCrawler(),
             'facebook': FacebookCrawler(),
             'spotify': SpotifyCrawler(),
-            'generic': GenericCrawler()
+            'generic': GenericCrawler(),
+            'ecommerce': EcommerceCrawler(),
+            'educational': EducationalCrawler(),
+            'blog_forum': BlogForumCrawler(),
+            'news': NewsCrawler(),
+            'podcast': PodcastCrawler()
         }
         
         # Configure crawlers with shared resources
@@ -381,6 +393,11 @@ __all__ = [
     'FacebookCrawler',
     'SpotifyCrawler',
     'GenericCrawler',
+    'EcommerceCrawler',
+    'EducationalCrawler',
+    'BlogForumCrawler',
+    'NewsCrawler',
+    'PodcastCrawler',
     'RateLimiter',
     'ProxyManager',
     'UserAgentRotator',

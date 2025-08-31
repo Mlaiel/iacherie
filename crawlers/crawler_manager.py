@@ -22,6 +22,11 @@ from .tiktok_crawler import TikTokCrawler
 from .twitter_crawler import TwitterCrawler
 from .facebook_crawler import FacebookCrawler
 from .generic_crawler import GenericWebCrawler
+from .ecommerce_crawler import EcommerceCrawler
+from .educational_crawler import EducationalCrawler
+from .blog_forum_crawler import BlogForumCrawler
+from .news_crawler import NewsCrawler
+from .podcast_crawler import PodcastCrawler
 from .surveillance_engine import SurveillanceEngine
 from ..database.repositories import CrawlRepository
 from ..core.exceptions import CrawlerError
@@ -89,7 +94,12 @@ class CrawlerManager:
             "tiktok": TikTokCrawler(),
             "twitter": TwitterCrawler(),
             "facebook": FacebookCrawler(),
-            "generic": GenericWebCrawler()
+            "generic": GenericWebCrawler(),
+            "ecommerce": EcommerceCrawler(),
+            "educational": EducationalCrawler(),
+            "blog_forum": BlogForumCrawler(),
+            "news": NewsCrawler(),
+            "podcast": PodcastCrawler()
         }
         
         # Surveillance engine
@@ -494,6 +504,9 @@ class CrawlerManager:
         return {
             "version": "1.0.0",
             "supported_platforms": list(self.crawlers.keys()),
+            "specialized_crawlers": [
+                "ecommerce", "educational", "blog_forum", "news", "podcast"
+            ],
             "active_surveillance_tasks": len(self.surveillance_tasks),
             "crawler_status": {
                 platform: status.value for platform, status in self.crawler_status.items()
@@ -507,3 +520,157 @@ class CrawlerManager:
                 for platform, limiter in self.rate_limiters.items()
             }
         }
+    
+    async def search_ecommerce_products(self,
+                                      query: str,
+                                      platforms: List[str] = None,
+                                      max_results: int = 50) -> List:
+        """Search for products across e-commerce platforms."""
+        try:
+            ecommerce_crawler = self.crawlers["ecommerce"]
+            return await ecommerce_crawler.search_products(query, platforms, max_results)
+        except Exception as e:
+            logger.error(f"Error in e-commerce search: {e}")
+            raise CrawlerError(f"E-commerce search failed: {str(e)}")
+    
+    async def search_educational_content(self,
+                                       query: str,
+                                       platforms: List[str] = None,
+                                       content_type: str = None,
+                                       max_results: int = 50) -> List:
+        """Search for educational content across platforms."""
+        try:
+            educational_crawler = self.crawlers["educational"]
+            return await educational_crawler.search_educational_content(
+                query, platforms, content_type, max_results
+            )
+        except Exception as e:
+            logger.error(f"Error in educational search: {e}")
+            raise CrawlerError(f"Educational search failed: {str(e)}")
+    
+    async def search_discussions(self,
+                               query: str,
+                               platforms: List[str] = None,
+                               content_type: str = 'both',
+                               max_results: int = 50) -> Dict:
+        """Search for discussions across blogs and forums."""
+        try:
+            blog_forum_crawler = self.crawlers["blog_forum"]
+            return await blog_forum_crawler.search_discussions(
+                query, platforms, content_type, max_results
+            )
+        except Exception as e:
+            logger.error(f"Error in discussion search: {e}")
+            raise CrawlerError(f"Discussion search failed: {str(e)}")
+    
+    async def search_news(self,
+                        query: str,
+                        sources: List[str] = None,
+                        category: str = None,
+                        date_from: datetime = None,
+                        max_results: int = 50) -> List:
+        """Search for news articles across sources."""
+        try:
+            news_crawler = self.crawlers["news"]
+            return await news_crawler.search_news(
+                query, sources, category, date_from, max_results
+            )
+        except Exception as e:
+            logger.error(f"Error in news search: {e}")
+            raise CrawlerError(f"News search failed: {str(e)}")
+    
+    async def search_podcasts(self,
+                            query: str,
+                            platforms: List[str] = None,
+                            category: str = None,
+                            max_results: int = 50) -> Dict:
+        """Search for podcasts and episodes across platforms."""
+        try:
+            podcast_crawler = self.crawlers["podcast"]
+            return await podcast_crawler.search_podcasts(
+                query, platforms, category, max_results
+            )
+        except Exception as e:
+            logger.error(f"Error in podcast search: {e}")
+            raise CrawlerError(f"Podcast search failed: {str(e)}")
+    
+    async def monitor_brand_violations(self,
+                                     brand_name: str,
+                                     content_keywords: List[str],
+                                     monitoring_types: List[str] = None) -> AsyncGenerator[Dict, None]:
+        """
+        Monitor for brand violations across all specialized crawlers.
+        
+        Args:
+            brand_name: Brand name to monitor
+            content_keywords: Keywords related to the content
+            monitoring_types: Types of monitoring (ecommerce, educational, etc.)
+        """
+        try:
+            if monitoring_types is None:
+                monitoring_types = ["ecommerce", "blog_forum", "news"]
+            
+            async def monitor_crawler(crawler_type: str):
+                if crawler_type == "ecommerce":
+                    crawler = self.crawlers["ecommerce"]
+                    async for violations in crawler.monitor_brand_violations(
+                        brand_name, content_keywords
+                    ):
+                        yield {"type": "ecommerce", "violations": violations}
+                
+                elif crawler_type == "blog_forum":
+                    crawler = self.crawlers["blog_forum"]
+                    async for mentions in crawler.monitor_brand_mentions(
+                        brand_name, content_keywords
+                    ):
+                        yield {"type": "blog_forum", "mentions": mentions}
+                
+                elif crawler_type == "news":
+                    crawler = self.crawlers["news"]
+                    async for articles in crawler.monitor_breaking_news([brand_name]):
+                        yield {"type": "news", "articles": articles}
+                
+                elif crawler_type == "podcast":
+                    crawler = self.crawlers["podcast"]
+                    async for episodes in crawler.monitor_audio_usage(
+                        brand_name, brand_name
+                    ):
+                        yield {"type": "podcast", "episodes": episodes}
+            
+            # Start monitoring for each type
+            tasks = []
+            for monitor_type in monitoring_types:
+                if monitor_type in self.crawlers:
+                    task = asyncio.create_task(
+                        self._monitor_wrapper(monitor_crawler(monitor_type))
+                    )
+                    tasks.append(task)
+            
+            # Yield results as they come in
+            while tasks:
+                done, pending = await asyncio.wait(
+                    tasks, return_when=asyncio.FIRST_COMPLETED
+                )
+                
+                for task in done:
+                    try:
+                        result = await task
+                        if result:
+                            yield result
+                    except Exception as e:
+                        logger.error(f"Error in brand monitoring: {e}")
+                
+                tasks = list(pending)
+                
+        except Exception as e:
+            logger.error(f"Error in comprehensive brand monitoring: {e}")
+            raise CrawlerError(f"Brand monitoring failed: {str(e)}")
+    
+    async def _monitor_wrapper(self, monitor_generator):
+        """Wrapper for monitoring generators."""
+        try:
+            async for result in monitor_generator:
+                return result
+        except Exception as e:
+            logger.error(f"Error in monitor wrapper: {e}")
+            return None
